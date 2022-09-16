@@ -31,6 +31,7 @@ The following merge options are set by default:
   The source aka leftmost object has by **default** the highest priority.
 - **array**: `true`
   Merge source and target arrays by priority order.
+- **arrayDistinct**: `false` Remove duplicates, when merging array properties.
 
 The merge behaviour can be changed by creating a custom [merger](#merger).
 

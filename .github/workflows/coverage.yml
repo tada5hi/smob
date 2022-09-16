@@ -1,10 +1,11 @@
-name: main
+name: Coverage
 
 on:
     push:
         branches: [ master ]
-    pull_request:
-        branches: [ master ]
+
+env:
+    PRIMARY_NODE_VERSION: 18
 
 jobs:
     build:
@@ -23,6 +24,12 @@ jobs:
             -   name: Build
                 uses: ./.github/actions/build
 
-            -   name: Run tests
+            -   name: Generate coverage
                 run: |
-                    npm run test
+                  npm run test:coverage
+
+            -   name: Upload Code coverage report
+                uses: codecov/codecov-action@v3.1.0
+                with:
+                  token: ${{ secrets.codecov }}
+                  directory: ./coverage/
