@@ -1,0 +1,50 @@
+{
+    "name": "smob",
+    "version": "0.0.0",
+    "description": "Safe merge objects.",
+    "main": "./dist/index.js",
+    "typings": "dist/index.d.ts",
+    "files": [
+        "dist/"
+    ],
+    "scripts": {
+        "build": "rm -rf ./dist && tsc",
+        "lint": "eslint --ext .js,.ts ./src",
+        "lint:fix": "npm run lint -- --fix",
+        "test": "cross-env NODE_ENV=test jest --config ./test/jest.config.js",
+        "test:coverage": "npm run test -- --coverage",
+        "prepublishOnly": "npm run build"
+    },
+    "author": {
+        "name": "Peter Placzek",
+        "email": "contact@tada5hi.net",
+        "url": "https://github.com/tada5hi"
+    },
+    "license": "MIT",
+    "keywords": [
+        "object",
+        "merge",
+        "safe",
+        "deep-merge",
+        "merge-deep"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Tada5hi/smob.git"
+    },
+    "bugs": {
+        "url": "https://github.com/Tada5hi/smob/issues"
+    },
+    "homepage": "https://github.com/Tada5hi/smob#readme",
+    "devDependencies": {
+        "@tada5hi/eslint-config-typescript": "^1.0.7",
+        "@types/jest": "^27.5.0",
+        "@types/node": "^18.7.17",
+        "cross-env": "^7.0.3",
+        "eslint": "^8.23.1",
+        "jest": "^27.5.1",
+        "np": "^7.6.2",
+        "ts-jest": "^27.1.4",
+        "typescript": "^4.8.3"
+    }
+}
