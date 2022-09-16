@@ -8,7 +8,8 @@
 export type Merger = <A extends Record<string, any>, B extends Record<string, any>>(target: A, ...sources: B[]) => A & B;
 
 export type Options = {
-    arrays: boolean,
+    array: boolean,
+    arrayDistinct: boolean,
     strategy?: (target: Record<string, any>, key: string, value: unknown) => Record<string, any> | undefined,
     priority: 'left' | 'right'
 };

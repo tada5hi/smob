@@ -5,6 +5,7 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
+export * from './array';
 export * from './check';
 export * from './cut';
 export * from './has-own-property';

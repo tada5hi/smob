@@ -4,7 +4,7 @@
 [![main](https://github.com/tada5hi/smob/actions/workflows/main.yml/badge.svg)](https://github.com/tada5hi/smob/actions/workflows/main.yml)
 [![codecov](https://codecov.io/gh/tada5hi/smob/branch/master/graph/badge.svg?token=0VL41WO0CG)](https://codecov.io/gh/tada5hi/smob)
 
-This is a library to **s**afe **m**erge **ob**jects and other data structures.
+Zero dependency library to **s**afe **m**erge **ob**jects and other data structures.
 
 **Table of Contents**
 
@@ -29,7 +29,7 @@ const ob = merge(target, ...sources);
 The following merge options are set by default:
 - **priority**: `left`
   The source aka leftmost object has by **default** the highest priority.
-- **arrays**: `true`
+- **array**: `true`
   Merge source and target arrays by priority order.
 
 The merge behaviour can be changed by creating a custom [merger](#merger).
@@ -59,14 +59,24 @@ console.log(merge({ a: 1 }, { a: 2 }, { a: 3 }));
 // => { a: 3 }
 ```
 
-**Arrays**
+**Array**
 ```typescript
 import { createMerger } from 'smob';
 
-const merge = createMerger({ arrays: false });
+const merge = createMerger({ array: false });
 
 console.log(merge({ a: [1,2,3] }, { a: [4,5,6] }));
 // => { a: [1,2,3] }
+```
+
+**ArrayDistinct**
+```typescript
+import { createMerger } from 'smob';
+
+const merge = createMerger({ arrayDistinct: true });
+
+console.log(merge({ a: [1,2,3] }, { a: [3,4,5] }));
+// => { a: [1,2,3,4,5] }
 ```
 
 **Strategy**

@@ -10,7 +10,8 @@ import { Options } from '../type';
 export function buildOptions(options?: Partial<Options>) {
     options = options || {};
 
-    options.arrays = options.arrays ?? true;
+    options.array = options.array ?? true;
+    options.arrayDistinct = options.arrayDistinct ?? false;
     options.priority = options.priority || 'left';
 
     return options as Options;

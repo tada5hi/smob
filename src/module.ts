@@ -9,8 +9,10 @@ import { Merger, Options } from './type';
 import {
     buildOptions,
     hasOwnProperty,
-    isObject, isSafeKey,
+    isObject,
+    isSafeKey,
     isSafeObject,
+    mergeArrays,
 } from './utils';
 
 export function baseMerger<A extends Record<string, any>, B extends Record<string, any>>(
@@ -56,16 +58,20 @@ export function baseMerger<A extends Record<string, any>, B extends Record<strin
                 }
 
                 if (
-                    options.arrays &&
+                    options.array &&
                     Array.isArray(target[key]) &&
                     Array.isArray(source[key])
                 ) {
                     switch (options.priority) {
                         case 'left':
-                            Object.assign(target, { [key]: target[key].concat(source[key]) });
+                            Object.assign(target, {
+                                [key]: mergeArrays(target[key], source[key], options.arrayDistinct),
+                            });
                             break;
                         case 'right':
-                            Object.assign(target, { [key]: source[key].concat(target[key]) });
+                            Object.assign(target, {
+                                [key]: mergeArrays(source[key], target[key], options.arrayDistinct),
+                            });
                             break;
                     }
 

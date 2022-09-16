@@ -113,21 +113,25 @@ describe('src/module/*.ts', () => {
         expect(merger({a: 1, b: 'foo'}, {a: 2}, {a: 3, c: {c: 0}})).toEqual({a: 6, b: 'foo', c: {c: 0}});
     });
 
-    it('should (not) merge array properties', () => {
+    it('should (not) merge arrays', () => {
         let merged = merge({a: [1,2,3]}, {a: [4,5,6]});
         expect(merged).toEqual({a: [1,2,3,4,5,6]})
 
-        let merger = createMerger({arrays: false});
+        let merger = createMerger({array: false});
         merged = merger({a: [1,2,3]}, {a: [4,5,6]});
         expect(merged).toEqual({a: [1,2,3]});
 
-        merger = createMerger({arrays: false, priority: 'right'});
+        merger = createMerger({array: false, priority: 'right'});
         merged = merger({a: [1,2,3]}, {a: [4,5,6]});
         expect(merged).toEqual({a: [4,5,6]});
 
         merger = createMerger({ priority: 'right' });
         merged = merger({a: [1,2,3]}, {a: [4,5,6]});
         expect(merged).toEqual({a: [4,5,6,1,2,3]});
+
+        merger = createMerger({ arrayDistinct: true });
+        merged = merger({a: [1,2,3]}, {a: [3,4,5]});
+        expect(merged).toEqual({a: [1,2,3,4,5]});
     });
 
     it('should (not) merge circular class reference', () => {
