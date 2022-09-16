@@ -6,7 +6,14 @@
  */
 
 import {merge, createMerger} from "../../src";
-import {MyCircularClass} from "../data/circular";
+
+class MyCircularClass {
+    ref : MyCircularClass;
+
+    constructor() {
+        this.ref = this;
+    }
+}
 
 describe('src/module/*.ts', () => {
     it('should merge simple objects', () => {
