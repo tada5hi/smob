@@ -4,7 +4,7 @@
 [![main](https://github.com/tada5hi/smob/actions/workflows/main.yml/badge.svg)](https://github.com/tada5hi/smob/actions/workflows/main.yml)
 [![codecov](https://codecov.io/gh/tada5hi/smob/branch/master/graph/badge.svg?token=0VL41WO0CG)](https://codecov.io/gh/tada5hi/smob)
 
-Zero dependency library to **s**afe **m**erge **ob**jects and other data structures.
+Zero dependency library to **s**afe **m**erge **ob**jects.
 
 **Table of Contents**
 
