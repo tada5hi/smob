@@ -2,13 +2,17 @@ name: main
 
 on:
     push:
-        branches: [ master ]
+        branches:
+            - '**'
     pull_request:
-        branches: [ master ]
+        branches:
+            - '**'
+
+env:
+    PRIMARY_NODE_VERSION: 18
 
 jobs:
     build:
-
         runs-on: ubuntu-latest
 
         steps:

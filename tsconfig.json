@@ -1,12 +1,16 @@
 {
     "compilerOptions": {
+        "allowSyntheticDefaultImports": true,
+        "declarationDir": "dist/types",
+        "declaration": true,
         "strict": true,
         "skipLibCheck": true,
         "esModuleInterop": true,
         "lib": [
             "ESNext"
         ],
-        "module": "commonjs",
+        "module": "ESNext",
+        "moduleResolution": "Node",
         "newLine": "LF",
         "noImplicitAny": true,
         "noImplicitReturns": true,
@@ -15,7 +19,7 @@
         "outDir": "dist",
         "sourceMap": true,
         "strictNullChecks": false,
-        "target": "es2015"
+        "target": "ESNext"
     },
     "include": [
         "src/**/*.ts"
