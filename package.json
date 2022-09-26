@@ -52,7 +52,7 @@
         "@rollup/plugin-node-resolve": "^14.1.0",
         "@tada5hi/eslint-config-typescript": "^1.0.7",
         "@types/jest": "^27.5.0",
-        "@types/node": "^18.7.17",
+        "@types/node": "^18.7.21",
         "cross-env": "^7.0.3",
         "eslint": "^8.23.1",
         "jest": "^27.5.1",
