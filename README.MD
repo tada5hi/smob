@@ -12,6 +12,7 @@ Zero dependency library to **s**afe **m**erge **ob**jects.
 - [Installation](#installation)
 - [Usage](#usage)
   - [Merger](#merger)
+- [License](#license)
 
 ## Installation
 
@@ -104,3 +105,9 @@ console.log(merge({ a: 1 }, { a: 2 }, { a: 3 }));
 ```
 
 Return **undefined** if the default merge behaviour should be used for the current target source pair.
+
+## License
+
+Made with 💚
+
+Published under [MIT License](./LICENSE).
