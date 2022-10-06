@@ -2,11 +2,15 @@ name: main
 
 on:
     push:
-        branches:
-            - '**'
+        branches: [master, next, beta, alpha]
     pull_request:
-        branches:
-            - '**'
+        branches: [master, next, beta, alpha]
+
+permissions:
+    packages: write
+    contents: write
+    issues: write
+    pull-requests: write
 
 env:
     PRIMARY_NODE_VERSION: 18
@@ -30,3 +34,9 @@ jobs:
             -   name: Run tests
                 run: |
                     npm run test
+
+            -   name: Release
+                env:
+                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                    NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+                run: npx semantic-release

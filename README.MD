@@ -3,6 +3,7 @@
 [![npm version](https://badge.fury.io/js/smob.svg)](https://badge.fury.io/js/smob)
 [![main](https://github.com/tada5hi/smob/actions/workflows/main.yml/badge.svg)](https://github.com/tada5hi/smob/actions/workflows/main.yml)
 [![codecov](https://codecov.io/gh/tada5hi/smob/branch/master/graph/badge.svg?token=0VL41WO0CG)](https://codecov.io/gh/tada5hi/smob)
+[![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
 
 Zero dependency library to **s**afe **m**erge **ob**jects.
 
