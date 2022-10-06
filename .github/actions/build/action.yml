@@ -4,11 +4,17 @@ description: 'Prepares the repo for a job by running the build'
 runs:
     using: 'composite'
     steps:
-        -   name: echo github.ref
-            shell: bash
-            run: echo ${{ github.ref }}
+        -   name: Use cache
+            id: 'cache'
+            uses: actions/cache@v3
+            with:
+                path: '**/dist/**'
+                key: ${{ runner.os }}-build-${{ github.sha }}
+                restore-keys: |
+                    ${{ runner.os }}-build-
 
-        - name: Build
-          shell: bash
-          run: |
-              npm run build
+        -   name: Build
+            shell: bash
+            if: steps.cache.outputs.cache-hit != 'true'
+            run: |
+                npm run build

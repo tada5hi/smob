@@ -31,7 +31,7 @@ runs:
                 restore-keys: |
                     ${{ runner.os }}-install-
 
-        - name: Install
-          shell: bash
-          run: |
-              npm install
+        -   name: Install
+            shell: bash
+            run: |
+                npm ci
