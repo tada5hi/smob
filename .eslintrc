@@ -11,9 +11,6 @@
     },
     "rules": {
         "class-methods-use-this": "off",
-        "import/no-cycle": [2, {
-            "maxDepth": 1
-        }],
 
         "no-continue": "off",
         "no-use-before-define": "off",
