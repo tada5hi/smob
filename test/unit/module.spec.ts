@@ -146,5 +146,16 @@ describe('src/module/*.ts', () => {
         let merger = createMerger({priority: 'right'});
         const merged = merger( {prototype: null}, {prototype: 1});
         expect(merged).toEqual({prototype: null})
+    });
+
+    it('should return optimized return type', () => {
+        let item : Record<string, any> = {
+            id: 1,
+            name: 'admin'
+        }
+
+        let data = merge({}, item);
+        expect(data.id).toEqual(1);
+        expect(data.name).toEqual('admin');
     })
 })
