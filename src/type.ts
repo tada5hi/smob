@@ -5,7 +5,8 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-export type Merger = <A extends Record<string, any>, B extends Record<string, any>>(target: A, ...sources: B[]) => A & B;
+export type MergerResult<A, B> = A extends B ? B extends A ? A : (A & B) : (A & B);
+export type Merger = <A extends Record<string, any>, B extends Record<string, any>>(target: A, ...sources: B[]) => MergerResult<A, B>;
 
 export type Options = {
     array: boolean,

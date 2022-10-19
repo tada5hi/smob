@@ -5,7 +5,7 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-import { Merger, Options } from './type';
+import { Merger, MergerResult, Options } from './type';
 import {
     buildOptions,
     hasOwnProperty,
@@ -19,8 +19,8 @@ export function baseMerger<A extends Record<string, any>, B extends Record<strin
     options: Options,
     target: A,
     ...sources: B[]
-) : A & B {
-    if (!sources.length) return target as A & B;
+) : MergerResult<A, B> {
+    if (!sources.length) return target as MergerResult<A, B>;
 
     const source = sources.shift();
 
