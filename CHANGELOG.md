@@ -1,3 +1,10 @@
+## [0.0.6](https://github.com/Tada5hi/smob/compare/v0.0.5...v0.0.6) (2022-10-19)
+
+
+### Bug Fixes
+
+* return type of merge result ([cc534b9](https://github.com/Tada5hi/smob/commit/cc534b960aeaae33f34d42e5bd0f172078f80efa))
+
 ## [0.0.5](https://github.com/Tada5hi/smob/compare/v0.0.4...v0.0.5) (2022-10-19)
 
 
