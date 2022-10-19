@@ -64,7 +64,7 @@
         "@rollup/plugin-node-resolve": "^15.0.0",
         "@tada5hi/eslint-config-typescript": "^1.0.8",
         "@types/jest": "^27.5.0",
-        "@types/node": "^18.11.0",
+        "@types/node": "^18.11.2",
         "cross-env": "^7.0.3",
         "eslint": "^8.25.0",
         "husky": "^8.0.1",
