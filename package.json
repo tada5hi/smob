@@ -62,7 +62,7 @@
         "@rollup/plugin-babel": "^6.0.2",
         "@rollup/plugin-commonjs": "^23.0.2",
         "@rollup/plugin-node-resolve": "^15.0.1",
-        "@tada5hi/eslint-config-typescript": "^1.0.8",
+        "@tada5hi/eslint-config-typescript": "^1.0.9",
         "@types/jest": "^27.5.0",
         "@types/node": "^18.11.4",
         "cross-env": "^7.0.3",
