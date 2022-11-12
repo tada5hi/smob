@@ -10,8 +10,6 @@ runs:
             with:
                 path: '**/dist/**'
                 key: ${{ runner.os }}-build-${{ github.sha }}
-                restore-keys: |
-                    ${{ runner.os }}-build-
 
         -   name: Build
             shell: bash
