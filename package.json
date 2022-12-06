@@ -65,7 +65,7 @@
         "@rollup/plugin-terser": "^0.1.0",
         "@tada5hi/eslint-config-typescript": "^1.0.10",
         "@types/jest": "^27.5.0",
-        "@types/node": "^18.11.9",
+        "@types/node": "^18.11.11",
         "cross-env": "^7.0.3",
         "eslint": "^8.29.0",
         "husky": "^8.0.2",
