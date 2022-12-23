@@ -63,7 +63,7 @@
         "@rollup/plugin-commonjs": "^24.0.0",
         "@rollup/plugin-node-resolve": "^15.0.1",
         "@rollup/plugin-terser": "^0.2.1",
-        "@tada5hi/eslint-config-typescript": "^1.0.10",
+        "@tada5hi/eslint-config-typescript": "^1.0.11",
         "@types/jest": "^27.5.0",
         "@types/node": "^18.11.17",
         "cross-env": "^7.0.3",
