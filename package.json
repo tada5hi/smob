@@ -68,7 +68,7 @@
         "@types/node": "^18.11.18",
         "cross-env": "^7.0.3",
         "eslint": "^8.31.0",
-        "husky": "^8.0.2",
+        "husky": "^8.0.3",
         "jest": "^27.5.1",
         "rollup": "^3.9.1",
         "semantic-release": "^19.0.5",
