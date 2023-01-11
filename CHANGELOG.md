@@ -1,3 +1,10 @@
+## [0.0.7](https://github.com/Tada5hi/smob/compare/v0.0.6...v0.0.7) (2023-01-11)
+
+
+### Bug Fixes
+
+* **deps:** bump json5 from 1.0.1 to 1.0.2 ([33a7d6c](https://github.com/Tada5hi/smob/commit/33a7d6c7dedcde7010179e25a683847fc63c25cb))
+
 ## [0.0.6](https://github.com/Tada5hi/smob/compare/v0.0.5...v0.0.6) (2022-10-19)
 
 
