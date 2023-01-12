@@ -1,7 +1,6 @@
 {
     "compilerOptions": {
         "allowSyntheticDefaultImports": true,
-        "declarationDir": "dist/types",
         "declaration": true,
         "strict": true,
         "skipLibCheck": true,

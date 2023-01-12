@@ -15,8 +15,6 @@ const extensions = [
     '.js', '.jsx', '.ts', '.tsx',
 ];
 
-const name = 'Smob';
-
 export default [
     {
         input: './src/index.ts',
@@ -35,16 +33,15 @@ export default [
             // Compile TypeScript/JavaScript files
             babel({
                 extensions,
-                babelHelpers: 'bundled',
                 include: [
                     'src/**/*'
                 ],
+                presets: [
+                    '@babel/preset-env',
+                    '@babel/preset-typescript',
+                ]
             }),
-            terser({
-                output: {
-                    ecma: 5,
-                },
-            }),
+            terser(),
         ],
         output: [
             {
@@ -53,51 +50,6 @@ export default [
             }, {
                 file: pkg.module,
                 format: 'esm'
-            }
-        ]
-    },
-    {
-        input: './src/index.ts',
-
-        // Specify here external modules which you don't want to include in your bundle (for instance: 'lodash', 'moment' etc.)
-        // https://rollupjs.org/guide/en/#external
-        external: [],
-
-        plugins: [
-            // Allows node_modules resolution
-            resolve({ extensions}),
-
-            // Allow bundling cjs modules. Rollup doesn't understand cjs
-            commonjs(),
-
-            // Compile TypeScript/JavaScript files
-            babel({
-                extensions,
-                babelHelpers: 'bundled',
-                include: [
-                    'src/**/*'
-                ],
-            }),
-            terser({
-                output: {
-                    ecma: 5,
-                },
-            }),
-        ],
-        output: [
-            {
-                file: pkg.browser,
-                format: 'esm',
-            },
-            {
-                file: pkg.unpkg,
-                format: 'iife',
-                name,
-
-                // https://rollupjs.org/guide/en/#outputglobals
-                globals: {
-
-                },
             }
         ]
     }
