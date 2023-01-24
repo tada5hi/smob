@@ -64,7 +64,7 @@
         "@semantic-release/npm": "^9.0.2",
         "@semantic-release/release-notes-generator": "^10.0.3",
         "@rollup/plugin-babel": "^6.0.3",
-        "@rollup/plugin-commonjs": "^24.0.0",
+        "@rollup/plugin-commonjs": "^24.0.1",
         "@rollup/plugin-node-resolve": "^15.0.1",
         "@rollup/plugin-terser": "^0.4.0",
         "@tada5hi/eslint-config-typescript": "^1.1.0",
