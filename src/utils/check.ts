@@ -9,7 +9,7 @@ import { hasOwnProperty } from './has-own-property';
 
 export function isObject(item: unknown) : item is Record<string, any> {
     return (
-        item &&
+        !!item &&
         typeof item === 'object' &&
         !Array.isArray(item)
     );
