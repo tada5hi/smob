@@ -8,6 +8,7 @@
 import resolve from '@rollup/plugin-node-resolve';
 import { transform } from "@swc/core";
 import pkg from './package.json' assert {type: 'json'};
+import terser from "@rollup/plugin-terser";
 
 const extensions = [
     '.js', '.jsx', '.ts', '.tsx',
@@ -40,7 +41,8 @@ export default [
                         sourceMaps: true
                     });
                 }
-            }
+            },
+            terser()
         ],
         output: [
             {
