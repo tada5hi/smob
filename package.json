@@ -36,6 +36,7 @@
     "license": "MIT",
     "keywords": [
         "object",
+        "object-merge",
         "merge",
         "safe",
         "deep-merge",
@@ -58,6 +59,7 @@
         "@swc/jest": "^0.2.24",
         "@tada5hi/commitlint-config": "^1.0.0",
         "@tada5hi/eslint-config-typescript": "^1.1.4",
+        "@tada5hi/tsconfig": "^0.4.0",
         "@types/jest": "^29.4.0",
         "@types/node": "^18.14.0",
         "cross-env": "^7.0.3",

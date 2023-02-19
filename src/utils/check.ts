@@ -20,7 +20,7 @@ export function isObjectDeeperThan(value: unknown, depth: number) {
         return isObject(value);
     }
 
-    if (typeof value !== 'object') {
+    if (!isObject(value)) {
         return false;
     }
 
