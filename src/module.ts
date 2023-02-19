@@ -5,7 +5,7 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-import { Merger, MergerResult, Options } from './type';
+import type { Merger, MergerResult, Options } from './type';
 import {
     buildOptions,
     hasOwnProperty,
