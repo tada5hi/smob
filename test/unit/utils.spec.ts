@@ -54,7 +54,8 @@ describe('src/utils/*.ts', () => {
             a: {
                 a: {
 
-                }
+                },
+                foo: 'bar'
             }
         }
 

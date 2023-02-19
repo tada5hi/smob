@@ -39,6 +39,7 @@ export function baseMerger<A extends Record<string, any>, B extends Record<strin
             if (hasOwnProperty(target, key)) {
                 if (options.strategy) {
                     const applied = options.strategy(target, key, source[key]);
+                    // todo: maybe compare returned target and argument passed target
                     if (typeof applied !== 'undefined') {
                         continue;
                     }

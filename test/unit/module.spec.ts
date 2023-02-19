@@ -34,6 +34,9 @@ describe('src/module/*.ts', () => {
             same: 'a'
         });
 
+        merged = merge({});
+        expect(merged).toEqual({})
+
         merged = createMerger({ priority: 'right' })({}, a, b);
         expect(merged).toEqual({
             a: 1,

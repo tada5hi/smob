@@ -17,11 +17,7 @@ export function cutObject<T extends Record<string, any>>(input: T, depth: number
 
     for (let i = 0; i < keys.length; i++) {
         if (isObject(value[keys[i]])) {
-            if (depth === 0) {
-                value[keys[i]] = {} as T[keyof T];
-            } else {
-                value[keys[i]] = cutObject(value[keys[i]], depth - 1);
-            }
+            value[keys[i]] = cutObject(value[keys[i]], depth - 1);
         }
     }
 
