@@ -4,7 +4,7 @@ module.exports = {
         "^.+\\.tsx?$": [
             "@swc/jest", {
                 jsc: {
-                    target: 'es2016',
+                    target: 'es2020',
                     parser: {
                         syntax: 'typescript'
                     }
