@@ -96,8 +96,6 @@ const merge = createMerger({
             target[key] += value;
             return target;
         }
-
-        return undefined;
     }
 });
 
@@ -105,7 +103,7 @@ console.log(merge({ a: 1 }, { a: 2 }, { a: 3 }));
 // => { a: 6 }
 ```
 
-Return **undefined** if the default merge behaviour should be used for the current target source pair.
+A returned value indicates that the strategy has been applied.
 
 ## License
 

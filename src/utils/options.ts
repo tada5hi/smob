@@ -5,14 +5,15 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-import type { Options } from '../type';
+import { PriorityName } from '../constants';
+import type { Options, OptionsInput } from '../type';
 
-export function buildOptions(options?: Partial<Options>) {
+export function buildOptions(options?: OptionsInput) : Options {
     options = options || {};
 
     options.array = options.array ?? true;
     options.arrayDistinct = options.arrayDistinct ?? false;
-    options.priority = options.priority || 'left';
+    options.priority = options.priority || PriorityName.LEFT;
 
     return options as Options;
 }

@@ -5,7 +5,10 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-import type { Merger, MergerResult, Options } from './type';
+import { PriorityName } from './constants';
+import type {
+    Merger, MergerResult, Options, OptionsInput,
+} from './type';
 import {
     buildOptions,
     hasOwnProperty,
@@ -39,7 +42,6 @@ export function baseMerger<A extends Record<string, any>, B extends Record<strin
             if (hasOwnProperty(target, key)) {
                 if (options.strategy) {
                     const applied = options.strategy(target, key, source[key]);
-                    // todo: maybe compare returned target and argument passed target
                     if (typeof applied !== 'undefined') {
                         continue;
                     }
@@ -64,12 +66,12 @@ export function baseMerger<A extends Record<string, any>, B extends Record<strin
                     Array.isArray(source[key])
                 ) {
                     switch (options.priority) {
-                        case 'left':
+                        case PriorityName.LEFT:
                             Object.assign(target, {
                                 [key]: mergeArrays(target[key], source[key], options.arrayDistinct),
                             });
                             break;
-                        case 'right':
+                        case PriorityName.RIGHT:
                             Object.assign(target, {
                                 [key]: mergeArrays(source[key], target[key], options.arrayDistinct),
                             });
@@ -79,7 +81,7 @@ export function baseMerger<A extends Record<string, any>, B extends Record<strin
                     continue;
                 }
 
-                if (options.priority === 'right') {
+                if (options.priority === PriorityName.RIGHT) {
                     Object.assign(target, { [key]: source[key] });
                 }
             } else {
@@ -91,7 +93,7 @@ export function baseMerger<A extends Record<string, any>, B extends Record<strin
     return baseMerger(options, target, ...sources);
 }
 
-export function createMerger(input?: Partial<Options>) : Merger {
+export function createMerger(input?: OptionsInput) : Merger {
     const options = buildOptions(input);
 
     return <A extends Record<string, any>, B extends Record<string, any>>(

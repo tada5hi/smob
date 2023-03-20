@@ -5,6 +5,8 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
+import type { PriorityName } from './constants';
+
 export type MergerResult<A, B> = A extends B ?
     B extends A ?
         // eslint-disable-next-line @typescript-eslint/ban-types
@@ -18,5 +20,7 @@ export type Options = {
     array: boolean,
     arrayDistinct: boolean,
     strategy?: (target: Record<string, any>, key: string, value: unknown) => Record<string, any> | undefined,
-    priority: 'left' | 'right'
+    priority: `${PriorityName}`
 };
+
+export type OptionsInput = Partial<Options>;
