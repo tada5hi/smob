@@ -1,3 +1,15 @@
+# [1.0.0](https://github.com/Tada5hi/smob/compare/v0.1.0...v1.0.0) (2023-03-20)
+
+
+### Features
+
+* const for priority side + cleanup types ([bf19728](https://github.com/Tada5hi/smob/commit/bf1972895066af4c7d33acbc04e7670f6b926794))
+
+
+### BREAKING CHANGES
+
+* bump version to v1.x
+
 # [0.1.0](https://github.com/Tada5hi/smob/compare/v0.0.7...v0.1.0) (2023-01-27)
 
 
