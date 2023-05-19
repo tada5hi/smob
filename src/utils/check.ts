@@ -5,37 +5,12 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-import { hasOwnProperty } from './has-own-property';
-
 export function isObject(item: unknown) : item is Record<string, any> {
     return (
         !!item &&
         typeof item === 'object' &&
         !Array.isArray(item)
     );
-}
-
-export function isObjectDeeperThan(value: unknown, depth: number) {
-    if (depth <= 0) {
-        return isObject(value);
-    }
-
-    if (!isObject(value)) {
-        return false;
-    }
-
-    const nextDepth = depth - 1;
-    const keys = Object.keys(value);
-    for (let i = 0; i < keys.length; i++) {
-        if (
-            hasOwnProperty(value, keys[i]) &&
-            isObjectDeeperThan(value[keys[i]], nextDepth)
-        ) {
-            return true;
-        }
-    }
-
-    return false;
 }
 
 export function isSafeObject(object: Record<string, any>) : boolean {
@@ -51,4 +26,37 @@ export function isSafeKey(key: string) : boolean {
     return key !== '__proto__' &&
         key !== 'prototype' &&
         key !== 'constructor';
+}
+
+export function isEqual(x: any, y: any): boolean {
+    if (Object.is(x, y)) return true;
+
+    if (x instanceof Date && y instanceof Date) {
+        return x.getTime() === y.getTime();
+    }
+
+    if (x instanceof RegExp && y instanceof RegExp) {
+        return x.toString() === y.toString();
+    }
+
+    if (!isObject(x) || !isObject(y)) {
+        return false;
+    }
+
+    const keysX = Reflect.ownKeys(x) as string[];
+    const keysY = Reflect.ownKeys(y) as string[];
+    if (keysX.length !== keysY.length) return false;
+
+    for (let i = 0; i < keysX.length; i++) {
+        const key = keysX[i];
+        if (!Reflect.has(y, key)) {
+            return false;
+        }
+
+        if (!isEqual(x[key], y[key])) {
+            return false;
+        }
+    }
+
+    return true;
 }
