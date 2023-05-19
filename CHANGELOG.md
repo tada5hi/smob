@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/Tada5hi/smob/compare/v1.0.0...v1.1.0) (2023-05-19)
+
+
+### Features
+
+* remove array duplicates by value & reference ([b55dcfc](https://github.com/Tada5hi/smob/commit/b55dcfc15c28fbec2d7d53654f70af0e888824fd))
+
 # [1.0.0](https://github.com/Tada5hi/smob/compare/v0.1.0...v1.0.0) (2023-03-20)
 
 
