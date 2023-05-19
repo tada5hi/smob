@@ -45,15 +45,13 @@ export function isEqual(x: any, y: any): boolean {
 
     const keysX = Reflect.ownKeys(x) as string[];
     const keysY = Reflect.ownKeys(y) as string[];
-    if (keysX.length !== keysY.length) return false;
+    if (keysX.length !== keysY.length) {
+        return false;
+    }
 
     for (let i = 0; i < keysX.length; i++) {
         const key = keysX[i];
-        if (!Reflect.has(y, key)) {
-            return false;
-        }
-
-        if (!isEqual(x[key], y[key])) {
+        if (!Reflect.has(y, key) || !isEqual(x[key], y[key])) {
             return false;
         }
     }

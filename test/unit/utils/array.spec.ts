@@ -20,11 +20,24 @@ describe('src/utils/array', function () {
 
         expect(distinctArray(arr)).toEqual([{ foo: 'bar' }]);
 
+        arr = [{foo: 'bar'}, {foo: 'baz'}]
+        expect(distinctArray(arr)).toEqual(arr);
+
         let circ : any = {foo: 'bar'};
         circ.bar = circ;
 
         arr = [{foo: { bar: 'baz'}}, circ];
         expect(distinctArray(arr)).toEqual(arr);
+
+        let now = Date.now();
+        let firstDate = new Date(now);
+        let secondData = new Date(now);
+
+        expect(distinctArray([firstDate, secondData])).toEqual([firstDate]);
+
+        let firstRegex = new RegExp(/foo/);
+        let secondRegex = new RegExp(/foo/);
+        expect(distinctArray([firstRegex, secondRegex])).toEqual([firstRegex]);
     })
 
     it('should merge arrays', () => {
