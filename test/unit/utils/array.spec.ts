@@ -23,6 +23,15 @@ describe('src/utils/array', function () {
         arr = [{foo: 'bar'}, {foo: 'baz'}]
         expect(distinctArray(arr)).toEqual(arr);
 
+        arr = [['foo', 'bar'], ['foo']];
+        expect(distinctArray(arr)).toEqual([['foo', 'bar'], ['foo']]);
+
+        arr = [['foo', 'bar'], ['foo', 'bar']];
+        expect(distinctArray(arr)).toEqual([['foo', 'bar']]);
+
+        arr = [['foo', 'bar'], ['bar', 'foo']];
+        expect(distinctArray(arr)).toEqual([['foo', 'bar'], ['bar', 'foo']]);
+
         let circ : any = {foo: 'bar'};
         circ.bar = circ;
 

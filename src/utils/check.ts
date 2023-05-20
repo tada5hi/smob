@@ -39,22 +39,42 @@ export function isEqual(x: any, y: any): boolean {
         return x.toString() === y.toString();
     }
 
-    if (!isObject(x) || !isObject(y)) {
-        return false;
-    }
-
-    const keysX = Reflect.ownKeys(x) as string[];
-    const keysY = Reflect.ownKeys(y) as string[];
-    if (keysX.length !== keysY.length) {
-        return false;
-    }
-
-    for (let i = 0; i < keysX.length; i++) {
-        const key = keysX[i];
-        if (!Reflect.has(y, key) || !isEqual(x[key], y[key])) {
+    if (
+        isObject(x) &&
+        isObject(y)
+    ) {
+        const keysX = Reflect.ownKeys(x) as string[];
+        const keysY = Reflect.ownKeys(y) as string[];
+        if (keysX.length !== keysY.length) {
             return false;
         }
+
+        for (let i = 0; i < keysX.length; i++) {
+            const key = keysX[i];
+            if (!Reflect.has(y, key) || !isEqual(x[key], y[key])) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
-    return true;
+    if (
+        Array.isArray(x) &&
+        Array.isArray(y)
+    ) {
+        if (x.length !== y.length) {
+            return false;
+        }
+
+        for (let i = 0; i < x.length; i++) {
+            if (!isEqual(x[i], y[i])) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    return false;
 }
