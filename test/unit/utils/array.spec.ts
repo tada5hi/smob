@@ -54,6 +54,10 @@ describe('src/utils/array', function () {
 
         expect(mergeArrays(['foo'], ['bar'])).toEqual(['foo', 'bar']);
 
+        expect(mergeArrays(['foo', 'bar'], ['baz'])).toEqual(['foo', 'bar', 'baz']);
+
+        expect(mergeArrays(['foo', 'bar'], [['baz']])).toEqual(['foo', 'bar', ['baz']]);
+
         expect(mergeArrays(['foo'], ['bar'], ['baz'])).toEqual(['foo', 'bar', 'baz']);
     })
 

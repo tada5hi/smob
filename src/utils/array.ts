@@ -22,16 +22,7 @@ export function distinctArray(arr: any[]) : any[] {
 }
 
 export function mergeArrays(...sources: any[][]) : any[] {
-    let merged = sources.shift();
-    if (!merged) {
-        return [];
-    }
-
-    for (let i = 0; i < sources.length; i++) {
-        merged = merged.concat(sources[i]);
-    }
-
-    return merged;
+    return ([] as any[]).concat.apply([], [...sources]);
 }
 
 export function mergeArraysDistinct(...sources: any[][]) : any[] {
