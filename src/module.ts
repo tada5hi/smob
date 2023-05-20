@@ -15,7 +15,7 @@ import {
     isObject,
     isSafeKey,
     isSafeObject,
-    mergeArrays,
+    mergeArrays, mergeArraysDistinct,
 } from './utils';
 
 export function baseMerger<A extends Record<string, any>, B extends Record<string, any>>(
@@ -68,12 +68,16 @@ export function baseMerger<A extends Record<string, any>, B extends Record<strin
                     switch (options.priority) {
                         case PriorityName.LEFT:
                             Object.assign(target, {
-                                [key]: mergeArrays(target[key], source[key], options.arrayDistinct),
+                                [key]: options.arrayDistinct ?
+                                    mergeArraysDistinct(target[key], source[key]) :
+                                    mergeArrays(target[key], source[key]),
                             });
                             break;
                         case PriorityName.RIGHT:
                             Object.assign(target, {
-                                [key]: mergeArrays(source[key], target[key], options.arrayDistinct),
+                                [key]: options.arrayDistinct ?
+                                    mergeArraysDistinct(source[key], target[key]) :
+                                    mergeArrays(source[key], target[key]),
                             });
                             break;
                     }

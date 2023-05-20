@@ -7,7 +7,7 @@
 
 import { isEqual } from './check';
 
-export function distinctArray(arr: any[]) {
+export function distinctArray(arr: any[]) : any[] {
     const copy = [...arr];
 
     for (let i = 0; i < copy.length; i++) {
@@ -21,16 +21,19 @@ export function distinctArray(arr: any[]) {
     return copy;
 }
 
-export function mergeArrays(
-    first: any[],
-    second: any[],
-    arrayDistinct: boolean,
-) {
-    const merged = first.concat(second);
+export function mergeArrays(...sources: any[][]) : any[] {
+    let merged = sources.shift();
+    if (!merged) {
+        return [];
+    }
 
-    if (arrayDistinct) {
-        return distinctArray(merged);
+    for (let i = 0; i < sources.length; i++) {
+        merged = merged.concat(sources[i]);
     }
 
     return merged;
+}
+
+export function mergeArraysDistinct(...sources: any[][]) : any[] {
+    return distinctArray(mergeArrays(...sources));
 }

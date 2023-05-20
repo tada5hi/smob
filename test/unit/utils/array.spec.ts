@@ -5,7 +5,7 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-import {distinctArray, mergeArrays} from "../../../src";
+import {distinctArray, mergeArrays, mergeArraysDistinct} from "../../../src";
 
 describe('src/utils/array', function () {
     it('should distinct array', () => {
@@ -50,9 +50,17 @@ describe('src/utils/array', function () {
     })
 
     it('should merge arrays', () => {
+        expect(mergeArrays()).toEqual([]);
+
+        expect(mergeArrays(['foo'], ['bar'])).toEqual(['foo', 'bar']);
+
+        expect(mergeArrays(['foo'], ['bar'], ['baz'])).toEqual(['foo', 'bar', 'baz']);
+    })
+
+    it('should merge arrays without duplicates', () => {
         let x = ['foo', 'bar', 'baz'];
         let y = ['baz', 'moo', 'bar', 'mal'];
 
-        expect(mergeArrays(x, y, true)).toEqual(['foo', 'bar', 'baz', 'moo', 'mal']);
+        expect(mergeArraysDistinct(x, y)).toEqual(['foo', 'bar', 'baz', 'moo', 'mal']);
     })
 });
