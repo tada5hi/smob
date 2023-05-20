@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/Tada5hi/smob/compare/v1.1.0...v1.1.1) (2023-05-20)
+
+
+### Bug Fixes
+
+* extend is-equal check for arrays ([406d48b](https://github.com/Tada5hi/smob/commit/406d48bc43db99ed7f7b46f56a1d2a948de3ade4))
+
 # [1.1.0](https://github.com/Tada5hi/smob/compare/v1.0.0...v1.1.0) (2023-05-19)
 
 
