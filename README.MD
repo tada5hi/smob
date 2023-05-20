@@ -34,7 +34,7 @@ The following merge options are set by default:
   The source aka leftmost object has by **default** the highest priority.
 - **array**: `true`
   Merge source and target arrays by priority order.
-- **arrayDistinct**: `false` Remove duplicates, when merging array properties.
+- **arrayDistinct**: `false` Remove duplicates, when merging array elements.
 
 The merge behaviour can be changed by creating a custom [merger](#merger).
 
@@ -45,8 +45,8 @@ The merge behaviour can be changed by creating a custom [merger](#merger).
 ```typescript
 import { merge } from 'smob';
 
-console.log(merge({ a: 1 }, { a: 2 }, { a: 3 }));
-// => { a: 1 }
+console.log(merge({ a: 1 }, { b: 2 }, { c: 3 }));
+// => { a: 1, b: 2, c: 3 }
 ```
 
 ### Merger
