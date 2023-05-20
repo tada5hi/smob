@@ -7,7 +7,7 @@
 
 import { isEqual } from './check';
 
-export function distinctArray(arr: any[]) : any[] {
+export function distinctArray<T = any>(arr: T[]) : T[] {
     const copy = [...arr];
 
     for (let i = 0; i < copy.length; i++) {
