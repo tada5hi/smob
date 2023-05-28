@@ -1,3 +1,10 @@
+# [1.3.0-alpha.1](https://github.com/Tada5hi/smob/compare/v1.2.0...v1.3.0-alpha.1) (2023-05-28)
+
+
+### Features
+
+* refactored merger to support arrays ([2185ebe](https://github.com/Tada5hi/smob/commit/2185ebe32b963e954265a71fad4bb302deb88e29))
+
 # [1.2.0](https://github.com/Tada5hi/smob/compare/v1.1.1...v1.2.0) (2023-05-28)
 
 
