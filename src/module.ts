@@ -152,6 +152,8 @@ function baseMerger<B extends MergerSource[]>(
         }
     }
 
+    context.map = new WeakMap();
+
     if (context.options.priority === PriorityName.RIGHT) {
         return baseMerger(context, ...sources, target) as MergerResult<B>;
     }
