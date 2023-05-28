@@ -6,16 +6,18 @@
  */
 
 import { PriorityName } from './constants';
-
 import type {
     Merger,
     MergerResult,
     MergerSource,
+    MergerSourceUnwrap,
     Options,
     OptionsInput,
 } from './type';
+
 import {
     buildOptions,
+    clone,
     distinctArray,
     hasOwnProperty,
     isObject,
@@ -31,24 +33,14 @@ function baseMerger<B extends MergerSource[]>(
         throw new SyntaxError('At least one input element is required.');
     }
 
-    let target : B;
-    let source : B | undefined;
+    let target : MergerSourceUnwrap<B>;
+    let source : MergerSourceUnwrap<B> | undefined;
     if (options.priority === PriorityName.RIGHT) {
-        target = options.modifyTarget ?
-            sources.pop() as B :
-            structuredClone(sources.pop() as B);
-
-        source = options.cloneSource ?
-            sources.pop() as B :
-            structuredClone(sources.pop() as B);
+        target = sources.pop() as MergerSourceUnwrap<B>;
+        source = sources.pop() as MergerSourceUnwrap<B>;
     } else {
-        target = options.modifyTarget ?
-            sources.shift() as B :
-            structuredClone(sources.shift() as B);
-
-        source = options.cloneSource ?
-            sources.shift() as B :
-            structuredClone(sources.shift() as B);
+        target = sources.shift() as MergerSourceUnwrap<B>;
+        source = sources.shift() as MergerSourceUnwrap<B>;
     }
 
     if (!source) {
@@ -66,21 +58,19 @@ function baseMerger<B extends MergerSource[]>(
         Array.isArray(target) &&
         Array.isArray(source)
     ) {
-        if (options.modifyTarget) {
-            target.push(...source as MergerSource[]);
-        }
+        target.push(...source as MergerSource[]);
 
         if (options.priority === PriorityName.RIGHT) {
             return baseMerger(
                 options,
                 ...sources,
-                options.modifyTarget ? target as B : target.concat(source) as B,
+                target,
             ) as MergerResult<B>;
         }
 
         return baseMerger(
             options,
-            options.modifyTarget ? target as B : target.concat(source) as B,
+            target,
             ...sources,
         ) as MergerResult<B>;
     }
@@ -91,13 +81,13 @@ function baseMerger<B extends MergerSource[]>(
     ) {
         const keys = Object.keys(source);
         for (let i = 0; i < keys.length; i++) {
-            const key = keys[i] as (keyof B);
-
-            if (!isSafeKey(key as string)) {
-                continue;
-            }
+            const key = keys[i] as (keyof MergerSourceUnwrap<B>);
 
             if (hasOwnProperty(target, key)) {
+                if (!isSafeKey(key as string)) {
+                    continue;
+                }
+
                 if (options.strategy) {
                     const applied = options.strategy(target, key as string, source[key]);
                     if (typeof applied !== 'undefined') {
@@ -114,9 +104,17 @@ function baseMerger<B extends MergerSource[]>(
                     }
 
                     if (options.priority === PriorityName.RIGHT) {
-                        target[key] = baseMerger(options, source[key] as MergerSource, target[key] as MergerSource) as B[keyof B];
+                        target[key] = baseMerger(
+                            options,
+                            source[key] as MergerSource,
+                            target[key] as MergerSource,
+                        ) as MergerSourceUnwrap<B>[keyof MergerSourceUnwrap<B>];
                     } else {
-                        target[key] = baseMerger(options, target[key] as MergerSource, source[key] as MergerSource) as B[keyof B];
+                        target[key] = baseMerger(
+                            options,
+                            target[key] as MergerSource,
+                            source[key] as MergerSource,
+                        ) as MergerSourceUnwrap<B>[keyof MergerSourceUnwrap<B>];
                     }
 
                     continue;
@@ -160,7 +158,27 @@ export function createMerger(input?: OptionsInput) : Merger {
 
     return <B extends MergerSource[]>(
         ...sources: B
-    ) : MergerResult<B> => baseMerger(options, ...sources);
+    ) : MergerResult<B> => {
+        if (options.clone) {
+            return baseMerger(options, ...clone(sources));
+        }
+
+        if (!options.inPlace) {
+            if (options.priority === PriorityName.LEFT) {
+                if (Array.isArray(sources[0])) {
+                    sources.unshift([]);
+                } else {
+                    sources.unshift({});
+                }
+            } else if (Array.isArray(sources[0])) {
+                sources.push([]);
+            } else {
+                sources.push({});
+            }
+        }
+
+        return baseMerger(options, ...sources);
+    };
 }
 
 export const merge = createMerger();
@@ -170,7 +188,7 @@ export function assign<A extends Record<string, any>, B extends Record<string, a
     ...sources: B
 ) : A & MergerResult<B> {
     return createMerger({
-        modifyTarget: true,
+        inPlace: true,
         priority: 'left',
         array: false,
     })(target, ...sources) as A & MergerResult<B>;

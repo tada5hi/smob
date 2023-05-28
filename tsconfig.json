@@ -2,7 +2,8 @@
     "extends": "@tada5hi/tsconfig",
     "compilerOptions": {
         "lib": [
-            "ESNext"
+            "ESNext",
+            "DOM"
         ],
         "module": "ESNext",
         "outDir": "dist",

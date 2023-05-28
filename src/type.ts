@@ -19,11 +19,33 @@ export type MergerResult<B extends MergerSource> = UnionToIntersection<MergerSou
 export type Merger = <B extends MergerSource[]>(...sources: B) => MergerResult<B>;
 
 export type Options = {
+    /**
+     * Merge array object attributes?
+     */
     array: boolean,
+    /**
+     * Remove duplicates in array.
+     */
     arrayDistinct: boolean,
+    /**
+     * Strategy to merge different object keys.
+     *
+     * @param target
+     * @param key
+     * @param value
+     */
     strategy?: (target: Record<string, any>, key: string, value: unknown) => Record<string, any> | undefined,
-    modifyTarget?: boolean,
-    cloneSource?: boolean,
+    /**
+     * Merge sources in place.
+     */
+    inPlace?: boolean
+    /**
+     * Deep clone input arrays/objects.
+     */
+    clone?: boolean,
+    /**
+     * Merge sources from left-right or left-right.
+     */
     priority: `${PriorityName}`
 };
 

@@ -234,7 +234,7 @@ describe('src/module/*.ts', () => {
             bar: 'baz'
         }
 
-        const merger = createMerger({ modifyTarget: false });
+        const merger = createMerger({ inPlace: false, clone: true });
         expect(merger({foo: x}, { foo: y })).toEqual({foo: {foo: 'bar', bar: 'baz'}});
 
         expect(x).toEqual({foo: 'bar'});
@@ -250,7 +250,7 @@ describe('src/module/*.ts', () => {
             bar: 'baz'
         }
 
-        const merger = createMerger({ modifyTarget: false, priority: 'right' });
+        const merger = createMerger({ inPlace: false, clone: true, priority: 'right' });
         expect(merger({foo: x}, { foo: y })).toEqual({foo: {foo: 'bar', bar: 'baz'}});
 
         expect(x).toEqual({foo: 'bar'});
@@ -266,7 +266,7 @@ describe('src/module/*.ts', () => {
             bar: 'baz'
         }
 
-        const merger = createMerger({ modifyTarget: true });
+        const merger = createMerger({ inPlace: true });
         expect(merger({foo: x}, { foo: y })).toEqual({foo: {foo: 'bar', bar: 'baz'}});
 
         expect(x).toEqual({foo: 'bar', bar: 'baz'});
@@ -282,7 +282,7 @@ describe('src/module/*.ts', () => {
             bar: 'baz'
         }
 
-        const merger = createMerger({ modifyTarget: true, priority: 'right' });
+        const merger = createMerger({ inPlace: true, priority: 'right' });
         expect(merger({foo: x}, { foo: y })).toEqual({foo: {foo: 'bar', bar: 'baz'}});
 
         expect(x).toEqual({foo: 'bar' });
@@ -300,7 +300,7 @@ describe('src/module/*.ts', () => {
             foo: xB
         }
 
-        const merger = createMerger({ modifyTarget: true, priority: 'right' });
+        const merger = createMerger({ inPlace: true, priority: 'right' });
         expect(merger({foo: x}, { foo: y })).toEqual({foo: {foo: ['baz', 'bar'] }});
 
         expect(x).toEqual({foo: ['bar'] });
