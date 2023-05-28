@@ -34,7 +34,7 @@ The following merge options are set by default:
 - **priority**: `left`
   The source aka leftmost array/object has by **default** the highest priority.
 - **array**: `true` Merge object array properties.
-- **distinct**: `false` Remove duplicates, when merging array elements.
+- **arrayDistinct**: `false` Remove duplicates, when merging array elements.
 
 The merge behaviour can be changed by creating a custom [merger](#merger).
 
@@ -76,7 +76,7 @@ console.log(merge({ a: [1,2,3] }, { a: [4,5,6] }));
 ```typescript
 import { createMerger } from 'smob';
 
-const merge = createMerger({ distinct: true });
+const merge = createMerger({ arrayDistinct: true });
 
 console.log(merge({ a: [1,2,3] }, { a: [3,4,5] }));
 // => { a: [1,2,3,4,5] }
