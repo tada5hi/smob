@@ -167,6 +167,33 @@ describe('src/module/*.ts', () => {
         expect(merged).toEqual(one);
     });
 
+    it('should merge circular objects', () => {
+        const foo : Record<string, any> = {bar: 'baz'};
+        foo.boz = foo;
+
+        const boo : Record<string, any> = {bar: 'baz', extra: foo};
+        boo.boz = boo;
+
+        const merged = merge(foo, boo);
+        expect(merged.extra).toBeDefined();
+        expect(merged.bar).toEqual('baz');
+        expect(merged.boz.bar).toEqual('baz');
+        expect(merged.boz.boz).toBeDefined();
+        expect(merged.boz.boz.extra).toBeDefined();
+        expect(merged.boz.extra).toEqual(boo.extra);
+    })
+
+    it('should merge circular arrays', () => {
+        const foo : any[] = ['bar'];
+        foo.push(foo);
+
+        const boo : any[] = ['bar'];
+        boo.push(boo);
+
+        const merged = merge(foo, boo);
+        expect(merged.length).toEqual(4);
+    })
+
     it('should not merge unsafe key', () => {
         let merger = createMerger({priority: 'right'});
         const merged = merger( {prototype: null}, {prototype: 1});

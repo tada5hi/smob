@@ -7,11 +7,10 @@
 
 import { PriorityName } from './constants';
 import type {
-    Merger,
+    Merger, MergerContext,
     MergerResult,
     MergerSource,
     MergerSourceUnwrap,
-    Options,
     OptionsInput,
 } from './type';
 
@@ -21,17 +20,16 @@ import {
     distinctArray,
     hasOwnProperty,
     isObject,
-    isSafeInput,
     isSafeKey,
 } from './utils';
 
 function baseMerger<B extends MergerSource[]>(
-    options: Options,
+    context: MergerContext,
     ...sources: B
 ) : MergerResult<B> {
     let target : MergerSourceUnwrap<B>;
     let source : MergerSourceUnwrap<B> | undefined;
-    if (options.priority === PriorityName.RIGHT) {
+    if (context.options.priority === PriorityName.RIGHT) {
         target = sources.pop() as MergerSourceUnwrap<B>;
         source = sources.pop() as MergerSourceUnwrap<B>;
     } else {
@@ -42,7 +40,7 @@ function baseMerger<B extends MergerSource[]>(
     if (!source) {
         if (
             Array.isArray(target) &&
-            options.arrayDistinct
+            context.options.arrayDistinct
         ) {
             return distinctArray(target) as MergerResult<B>;
         }
@@ -56,20 +54,22 @@ function baseMerger<B extends MergerSource[]>(
     ) {
         target.push(...source as MergerSource[]);
 
-        if (options.priority === PriorityName.RIGHT) {
+        if (context.options.priority === PriorityName.RIGHT) {
             return baseMerger(
-                options,
+                context,
                 ...sources,
                 target,
             ) as MergerResult<B>;
         }
 
         return baseMerger(
-            options,
+            context,
             target,
             ...sources,
         ) as MergerResult<B>;
     }
+
+    context.map.set(source, true);
 
     if (
         isObject(target) &&
@@ -84,8 +84,8 @@ function baseMerger<B extends MergerSource[]>(
                     continue;
                 }
 
-                if (options.strategy) {
-                    const applied = options.strategy(target, key as string, source[key]);
+                if (context.options.strategy) {
+                    const applied = context.options.strategy(target, key as string, source[key]);
                     if (typeof applied !== 'undefined') {
                         continue;
                     }
@@ -95,19 +95,29 @@ function baseMerger<B extends MergerSource[]>(
                     isObject(target[key]) &&
                     isObject(source[key])
                 ) {
-                    if (!isSafeInput(source[key])) {
+                    if (context.map.has(source[key])) {
+                        const sourceKeys = Object.keys(source[key] as Record<string, any>);
+                        for (let j = 0; j < sourceKeys.length; j++) {
+                            if (
+                                isSafeKey(sourceKeys[j]) &&
+                                !hasOwnProperty(target[key] as Record<string, any>, sourceKeys[j])
+                            ) {
+                                (target[key] as Record<string, any>)[sourceKeys[j]] = (source[key] as Record<string, any>)[sourceKeys[j]];
+                            }
+                        }
+
                         continue;
                     }
 
-                    if (options.priority === PriorityName.RIGHT) {
+                    if (context.options.priority === PriorityName.RIGHT) {
                         target[key] = baseMerger(
-                            options,
+                            context,
                             source[key] as MergerSource,
                             target[key] as MergerSource,
                         ) as MergerSourceUnwrap<B>[keyof MergerSourceUnwrap<B>];
                     } else {
                         target[key] = baseMerger(
-                            options,
+                            context,
                             target[key] as MergerSource,
                             source[key] as MergerSource,
                         ) as MergerSourceUnwrap<B>[keyof MergerSourceUnwrap<B>];
@@ -117,19 +127,19 @@ function baseMerger<B extends MergerSource[]>(
                 }
 
                 if (
-                    options.array &&
+                    context.options.array &&
                     Array.isArray(target[key]) &&
                     Array.isArray(source[key])
                 ) {
-                    switch (options.priority) {
+                    switch (context.options.priority) {
                         case PriorityName.LEFT:
                             Object.assign(target, {
-                                [key]: baseMerger(options, target[key] as MergerSource, source[key] as MergerSource),
+                                [key]: baseMerger(context, target[key] as MergerSource, source[key] as MergerSource),
                             });
                             break;
                         case PriorityName.RIGHT:
                             Object.assign(target, {
-                                [key]: baseMerger(options, source[key] as MergerSource, target[key] as MergerSource),
+                                [key]: baseMerger(context, source[key] as MergerSource, target[key] as MergerSource),
                             });
                             break;
                     }
@@ -142,11 +152,11 @@ function baseMerger<B extends MergerSource[]>(
         }
     }
 
-    if (options.priority === PriorityName.RIGHT) {
-        return baseMerger(options, ...sources, target) as MergerResult<B>;
+    if (context.options.priority === PriorityName.RIGHT) {
+        return baseMerger(context, ...sources, target) as MergerResult<B>;
     }
 
-    return baseMerger(options, target, ...sources) as MergerResult<B>;
+    return baseMerger(context, target, ...sources) as MergerResult<B>;
 }
 
 export function createMerger(input?: OptionsInput) : Merger {
@@ -159,8 +169,13 @@ export function createMerger(input?: OptionsInput) : Merger {
             throw new SyntaxError('At least one input element is required.');
         }
 
+        const ctx : MergerContext = {
+            options,
+            map: new WeakMap<any, any>(),
+        };
+
         if (options.clone) {
-            return baseMerger(options, ...clone(sources));
+            return baseMerger(ctx, ...clone(sources));
         }
 
         if (!options.inPlace) {
@@ -177,7 +192,7 @@ export function createMerger(input?: OptionsInput) : Merger {
             }
         }
 
-        return baseMerger(options, ...sources);
+        return baseMerger(ctx, ...sources);
     };
 }
 

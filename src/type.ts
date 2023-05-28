@@ -10,14 +10,6 @@ import type { PriorityName } from './constants';
 type UnionToIntersection<U> =
     (U extends any ? (k: U) => void : never) extends ((k: infer I)=>void) ? I : never;
 
-export type MergerSource = any[] | Record<string, any>;
-
-export type MergerSourceUnwrap<T extends MergerSource> = T extends Array<infer Return> ? Return : T;
-
-export type MergerResult<B extends MergerSource> = UnionToIntersection<MergerSourceUnwrap<B>>;
-
-export type Merger = <B extends MergerSource[]>(...sources: B) => MergerResult<B>;
-
 export type Options = {
     /**
      * Merge object array properties.
@@ -60,3 +52,16 @@ export type Options = {
 };
 
 export type OptionsInput = Partial<Options>;
+
+export type MergerSource = any[] | Record<string, any>;
+
+export type MergerSourceUnwrap<T extends MergerSource> = T extends Array<infer Return> ? Return : T;
+
+export type MergerResult<B extends MergerSource> = UnionToIntersection<MergerSourceUnwrap<B>>;
+
+export type MergerContext = {
+    options: Options,
+    map: WeakMap<any, any>
+};
+
+export type Merger = <B extends MergerSource[]>(...sources: B) => MergerResult<B>;

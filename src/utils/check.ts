@@ -13,15 +13,6 @@ export function isObject(item: unknown) : item is Record<string, any> {
     );
 }
 
-export function isSafeInput(object: any) : boolean {
-    try {
-        JSON.stringify(object);
-        return true;
-    } catch (e) {
-        return false;
-    }
-}
-
 export function isSafeKey(key: string) : boolean {
     return key !== '__proto__' &&
         key !== 'prototype' &&

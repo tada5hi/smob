@@ -5,7 +5,7 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-import {polyfillClone} from "../../../src";
+import { polyfillClone } from "../../../src";
 
 describe('src/utils/clone', function () {
     it('should polyfill clone objects with circular reference', () => {
