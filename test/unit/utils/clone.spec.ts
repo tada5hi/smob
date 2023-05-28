@@ -5,11 +5,11 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-import { polyfillClone } from "../../../src";
+import { polyfillClone } from '../../../src';
 
-describe('src/utils/clone', function () {
+describe('src/utils/clone', () => {
     it('should polyfill clone objects with circular reference', () => {
-        const foo : Record<string, any> = {bar: 'baz'};
+        const foo : Record<string, any> = { bar: 'baz' };
         foo.boz = foo;
 
         const copy = polyfillClone(foo);
@@ -22,5 +22,5 @@ describe('src/utils/clone', function () {
 
         const copy = polyfillClone(foo);
         expect(copy).toEqual(foo);
-    })
+    });
 });

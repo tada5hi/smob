@@ -5,9 +5,9 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-import {distinctArray, mergeArrays, mergeArraysDistinct} from "../../../src";
+import { distinctArray } from '../../../src';
 
-describe('src/utils/array', function () {
+describe('src/utils/array', () => {
     it('should distinct array', () => {
         let arr: any[] = [0, 1, 2, 3];
 
@@ -16,11 +16,11 @@ describe('src/utils/array', function () {
         arr = [0, 1, 2, 0, 0];
         expect(distinctArray(arr)).toEqual([0, 1, 2]);
 
-        arr = [{foo: 'bar'}, {foo: 'bar'}]
+        arr = [{ foo: 'bar' }, { foo: 'bar' }];
 
         expect(distinctArray(arr)).toEqual([{ foo: 'bar' }]);
 
-        arr = [{foo: 'bar'}, {foo: 'baz'}]
+        arr = [{ foo: 'bar' }, { foo: 'baz' }];
         expect(distinctArray(arr)).toEqual(arr);
 
         arr = [['foo', 'bar'], ['foo']];
@@ -32,39 +32,20 @@ describe('src/utils/array', function () {
         arr = [['foo', 'bar'], ['bar', 'foo']];
         expect(distinctArray(arr)).toEqual([['foo', 'bar'], ['bar', 'foo']]);
 
-        let circ : any = {foo: 'bar'};
+        const circ : any = { foo: 'bar' };
         circ.bar = circ;
 
-        arr = [{foo: { bar: 'baz'}}, circ];
+        arr = [{ foo: { bar: 'baz' } }, circ];
         expect(distinctArray(arr)).toEqual(arr);
 
-        let now = Date.now();
-        let firstDate = new Date(now);
-        let secondData = new Date(now);
+        const now = Date.now();
+        const firstDate = new Date(now);
+        const secondData = new Date(now);
 
         expect(distinctArray([firstDate, secondData])).toEqual([firstDate]);
 
-        let firstRegex = new RegExp(/foo/);
-        let secondRegex = new RegExp(/foo/);
+        const firstRegex = /foo/;
+        const secondRegex = /foo/;
         expect(distinctArray([firstRegex, secondRegex])).toEqual([firstRegex]);
-    })
-
-    it('should merge arrays', () => {
-        expect(mergeArrays()).toEqual([]);
-
-        expect(mergeArrays(['foo'], ['bar'])).toEqual(['foo', 'bar']);
-
-        expect(mergeArrays(['foo', 'bar'], ['baz'])).toEqual(['foo', 'bar', 'baz']);
-
-        expect(mergeArrays(['foo', 'bar'], [['baz']])).toEqual(['foo', 'bar', ['baz']]);
-
-        expect(mergeArrays(['foo'], ['bar'], ['baz'])).toEqual(['foo', 'bar', 'baz']);
-    })
-
-    it('should merge arrays without duplicates', () => {
-        let x = ['foo', 'bar', 'baz'];
-        let y = ['baz', 'moo', 'bar', 'mal'];
-
-        expect(mergeArraysDistinct(x, y)).toEqual(['foo', 'bar', 'baz', 'moo', 'mal']);
-    })
+    });
 });

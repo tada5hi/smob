@@ -5,18 +5,18 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-import {assign} from "../../src";
+import { assign } from '../../src';
 
 describe('src/presets', () => {
     it('should assign default properties', () => {
-        let target = {
-            foo: 'bar'
+        const target = {
+            foo: 'bar',
         };
 
         assign(target, {
-            baz: 'boz'
+            baz: 'boz',
         });
 
-        expect(target).toEqual({foo: 'bar', baz: 'boz'})
-    })
-})
+        expect(target).toEqual({ foo: 'bar', baz: 'boz' });
+    });
+});

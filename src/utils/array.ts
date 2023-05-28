@@ -18,11 +18,3 @@ export function distinctArray<T = any>(arr: T[]) : T[] {
 
     return arr;
 }
-
-export function mergeArrays(...sources: any[][]) : any[] {
-    return ([] as any[]).concat.apply([], [...sources]);
-}
-
-export function mergeArraysDistinct(...sources: any[][]) : any[] {
-    return distinctArray(mergeArrays(...sources));
-}

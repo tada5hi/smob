@@ -5,13 +5,11 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-import { cutObject } from "../../../src";
-
-
+import { cutObject } from '../../../src';
 
 describe('src/utils/*.ts', () => {
     it('should cut object correct', () => {
-        let ob = {};
+        const ob = {};
 
         let depth = cutObject(ob, 1);
         expect(depth).toEqual({});
@@ -20,22 +18,22 @@ describe('src/utils/*.ts', () => {
             a: {
                 a: {
                     a: {
-                        b: 1
-                    }
-                }
-            }
-        }
+                        b: 1,
+                    },
+                },
+            },
+        };
 
         depth = cutObject(nested, 0);
-        expect(depth).toEqual({a: {}});
+        expect(depth).toEqual({ a: {} });
 
         depth = cutObject(nested, 1);
-        expect(depth).toEqual({a: { a: {}}});
+        expect(depth).toEqual({ a: { a: {} } });
 
         depth = cutObject(nested, 2);
-        expect(depth).toEqual({a: { a: { a: {}}}});
+        expect(depth).toEqual({ a: { a: { a: {} } } });
 
         depth = cutObject(nested, 3);
-        expect(depth).toEqual({ a: { a: { a: { b: 1 } } } } );
+        expect(depth).toEqual({ a: { a: { a: { b: 1 } } } });
     });
-})
+});
