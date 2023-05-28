@@ -20,11 +20,15 @@ export type Merger = <B extends MergerSource[]>(...sources: B) => MergerResult<B
 
 export type Options = {
     /**
-     * Merge array object attributes?
+     * Merge object array properties.
+     *
+     * default: true
      */
     array: boolean,
     /**
-     * Remove duplicates in array.
+     * Remove duplicates, when merging array elements.
+     *
+     * default: false
      */
     arrayDistinct: boolean,
     /**
@@ -37,14 +41,20 @@ export type Options = {
     strategy?: (target: Record<string, any>, key: string, value: unknown) => Record<string, any> | undefined,
     /**
      * Merge sources in place.
+     *
+     * default: false
      */
     inPlace?: boolean
     /**
-     * Deep clone input arrays/objects.
+     * Deep clone input sources.
+     *
+     * default: false
      */
     clone?: boolean,
     /**
-     * Merge sources from left-right or left-right.
+     * Merge sources from left-to-right or right-to-left.
+     *
+     * default: left
      */
     priority: `${PriorityName}`
 };

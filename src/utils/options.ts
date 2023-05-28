@@ -13,6 +13,7 @@ export function buildOptions(options?: OptionsInput) : Options {
 
     options.array = options.array ?? true;
     options.arrayDistinct = options.arrayDistinct ?? false;
+    options.clone = options.clone ?? false;
     options.inPlace = options.inPlace ?? false;
     options.priority = options.priority || PriorityName.LEFT;
 
