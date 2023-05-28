@@ -80,8 +80,30 @@ describe('src/module/*.ts', () => {
                 same: 'a'
             },
         })
+    });
 
-        merged = createMerger({ priority: 'right' })({}, a, b);
+    it('should merge nested objects with right priority', () => {
+        const a: Record<string, any> = {
+            a: {
+                a: 1
+            },
+            same: {
+                a: 1,
+                same: 'a'
+            },
+        }
+
+        const b: Record<string, any> = {
+            b: {
+                b: 2
+            },
+            same: {
+                b: 1,
+                same: 'b'
+            }
+        }
+
+        const merged = createMerger({ priority: 'right' })({}, a, b);
         expect(merged).toEqual({
             a: {
                 a: 1
@@ -148,7 +170,7 @@ describe('src/module/*.ts', () => {
     it('should not merge unsafe key', () => {
         let merger = createMerger({priority: 'right'});
         const merged = merger( {prototype: null}, {prototype: 1});
-        expect(merged).toEqual({prototype: null})
+        expect(merged).toEqual({prototype: 1})
     });
 
     it('should return optimized return type', () => {
@@ -160,5 +182,130 @@ describe('src/module/*.ts', () => {
         let data = merge({}, item);
         expect(data.id).toEqual(1);
         expect(data.name).toEqual('admin');
+    });
+
+    it('should merge different types', () => {
+        type Foo = {
+            foo: string
+        }
+
+        type Bar = {
+            bar: string
+        }
+
+        let foo : Foo = {
+            foo: 'bar'
+        }
+
+        let bar : Bar = {
+            bar: 'baz'
+        }
+
+        const ob = merge(foo, bar);
+        expect(ob).toEqual({foo: 'bar', bar: 'baz'});
+
+        const arr = merge([foo], [bar]);
+        expect(arr).toEqual([foo, bar]);
     })
+
+    it('should merge arrays', () => {
+        expect(merge(['foo'], ['bar'])).toEqual(['foo', 'bar']);
+
+        expect(merge(['foo', 'bar'], ['baz'])).toEqual(['foo', 'bar', 'baz']);
+
+        expect(merge(['foo', 'bar'], [['baz']])).toEqual(['foo', 'bar', ['baz']]);
+
+        expect(merge(['foo'], ['bar'], ['baz'])).toEqual(['foo', 'bar', 'baz']);
+    })
+
+    it('should merge arrays with right priority', () => {
+        const merger = createMerger({ priority: 'right' });
+        expect(merger([4,5,6], [1,2,3,4])).toEqual([1,2,3,4,4,5,6]);
+
+        expect(merger({foo: [4,5,6]}, {foo: [1,2,3,4]})).toEqual({foo: [1,2,3,4,4,5,6]});
+    });
+
+    it('should merge with destruction', () => {
+        const x = {
+            foo: 'bar'
+        };
+
+        const y = {
+            bar: 'baz'
+        }
+
+        const merger = createMerger({ modifyTarget: false });
+        expect(merger({foo: x}, { foo: y })).toEqual({foo: {foo: 'bar', bar: 'baz'}});
+
+        expect(x).toEqual({foo: 'bar'});
+        expect(y).toEqual({bar: 'baz'});
+    });
+
+    it('should merge with destruction and right priority', () => {
+        const x = {
+            foo: 'bar'
+        };
+
+        const y = {
+            bar: 'baz'
+        }
+
+        const merger = createMerger({ modifyTarget: false, priority: 'right' });
+        expect(merger({foo: x}, { foo: y })).toEqual({foo: {foo: 'bar', bar: 'baz'}});
+
+        expect(x).toEqual({foo: 'bar'});
+        expect(y).toEqual({bar: 'baz'});
+    });
+
+    it('should merge without destruction', () => {
+        const x = {
+            foo: 'bar'
+        };
+
+        const y = {
+            bar: 'baz'
+        }
+
+        const merger = createMerger({ modifyTarget: true });
+        expect(merger({foo: x}, { foo: y })).toEqual({foo: {foo: 'bar', bar: 'baz'}});
+
+        expect(x).toEqual({foo: 'bar', bar: 'baz'});
+        expect(y).toEqual({bar: 'baz'});
+    });
+
+    it('should merge without destruction and right priority', () => {
+        const x = {
+            foo: 'bar'
+        };
+
+        const y = {
+            bar: 'baz'
+        }
+
+        const merger = createMerger({ modifyTarget: true, priority: 'right' });
+        expect(merger({foo: x}, { foo: y })).toEqual({foo: {foo: 'bar', bar: 'baz'}});
+
+        expect(x).toEqual({foo: 'bar' });
+        expect(y).toEqual({foo: 'bar', bar: 'baz'});
+    });
+
+    it('should merge without array, destruction and right priority', () => {
+        const xA = ['bar']
+        const x = {
+            foo: xA
+        };
+
+        const xB = ['baz'];
+        const y = {
+            foo: xB
+        }
+
+        const merger = createMerger({ modifyTarget: true, priority: 'right' });
+        expect(merger({foo: x}, { foo: y })).toEqual({foo: {foo: ['baz', 'bar'] }});
+
+        expect(x).toEqual({foo: ['bar'] });
+        expect(y).toEqual({foo: ['baz', 'bar']});
+
+        expect(xB).toEqual(['baz', 'bar']);
+    });
 })

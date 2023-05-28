@@ -7,19 +7,23 @@
 
 import type { PriorityName } from './constants';
 
-export type MergerResult<A, B> = A extends B ?
-    B extends A ?
-        // eslint-disable-next-line @typescript-eslint/ban-types
-        (A extends {} ? B : A) :
-        (A & B) :
-    (A & B);
+type UnionToIntersection<U> =
+    (U extends any ? (k: U) => void : never) extends ((k: infer I)=>void) ? I : never;
 
-export type Merger = <A extends Record<string, any>, B extends Record<string, any>>(target: A, ...sources: B[]) => MergerResult<A, B>;
+export type MergerSource = any[] | Record<string, any>;
+
+export type MergerSourceUnwrap<T extends MergerSource> = T extends Array<infer Return> ? Return : T;
+
+export type MergerResult<B extends MergerSource> = UnionToIntersection<MergerSourceUnwrap<B>>;
+
+export type Merger = <B extends MergerSource[]>(...sources: B) => MergerResult<B>;
 
 export type Options = {
     array: boolean,
     arrayDistinct: boolean,
     strategy?: (target: Record<string, any>, key: string, value: unknown) => Record<string, any> | undefined,
+    modifyTarget?: boolean,
+    cloneSource?: boolean,
     priority: `${PriorityName}`
 };
 

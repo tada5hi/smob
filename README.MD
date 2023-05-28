@@ -13,6 +13,7 @@ Zero dependency library to **s**afe **m**erge **ob**jects.
 - [Installation](#installation)
 - [Usage](#usage)
   - [Merger](#merger)
+  - [Utils](#utils)
 - [License](#license)
 
 ## Installation
@@ -26,21 +27,19 @@ npm install smob --save
 ```typescript
 import { merge } from "smob";
 
-const ob = merge(target, ...sources);
+const output = merge(...sources);
 ```
 
 The following merge options are set by default:
 - **priority**: `left`
-  The source aka leftmost object has by **default** the highest priority.
-- **array**: `true`
-  Merge source and target arrays by priority order.
-- **arrayDistinct**: `false` Remove duplicates, when merging array elements.
+  The source aka leftmost array/object has by **default** the highest priority.
+- **array**: `true` Merge object array properties.
+- **distinct**: `false` Remove duplicates, when merging array elements.
 
 The merge behaviour can be changed by creating a custom [merger](#merger).
 
 **Arguments**
-- target `Record<string, any>`: The destination object to merge the source object(s).
-- sources `Record<string, any>[]`: The source object(s).
+- sources `(any[] | Record<string, any>)[]`: The source arrays/objects.
 
 ```typescript
 import { merge } from 'smob';
@@ -73,11 +72,11 @@ console.log(merge({ a: [1,2,3] }, { a: [4,5,6] }));
 // => { a: [1,2,3] }
 ```
 
-**ArrayDistinct**
+**Distinct**
 ```typescript
 import { createMerger } from 'smob';
 
-const merge = createMerger({ arrayDistinct: true });
+const merge = createMerger({ distinct: true });
 
 console.log(merge({ a: [1,2,3] }, { a: [3,4,5] }));
 // => { a: [1,2,3,4,5] }
@@ -104,6 +103,51 @@ console.log(merge({ a: 1 }, { a: 2 }, { a: 3 }));
 ```
 
 A returned value indicates that the strategy has been applied.
+
+## Utils
+
+### distinctArray
+
+```typescript
+import { distinctArray } from 'smob';
+
+distnctArray(['foo', 'bar', 'foo']);
+// ['foo', 'bar']
+```
+
+The function also removes non-primitive
+elements that are identical by value or reference.
+
+**Objects**
+```typescript
+import { distinctArray } from 'smob';
+
+distinctArray([{ foo: 'bar' }, { foo: 'bar' }]);
+// [{ foo: 'bar' }]
+```
+
+**Arrays**
+```typescript
+import { distinctArray } from 'smob';
+
+distinctArray([['foo', 'bar'], ['foo', 'bar']]);
+// [['foo', 'bar']]
+```
+
+### isEqual
+
+Checks if two (non-primitive) elements
+are identical by value or reference.
+
+````typescript
+import { isEqual } from 'smob';
+
+isEqual({foo: 'bar'}, {foo: 'bar'});
+// true
+
+isEqual(['foo', 'bar'], ['foo', 'bar']);
+// true
+````
 
 ## License
 

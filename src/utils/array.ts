@@ -8,17 +8,15 @@
 import { isEqual } from './check';
 
 export function distinctArray<T = any>(arr: T[]) : T[] {
-    const copy = [...arr];
-
-    for (let i = 0; i < copy.length; i++) {
-        for (let j = copy.length - 1; j > i; j--) {
-            if (isEqual(copy[i], copy[j])) {
-                copy.splice(j, 1);
+    for (let i = 0; i < arr.length; i++) {
+        for (let j = arr.length - 1; j > i; j--) {
+            if (isEqual(arr[i], arr[j])) {
+                arr.splice(j, 1);
             }
         }
     }
 
-    return copy;
+    return arr;
 }
 
 export function mergeArrays(...sources: any[][]) : any[] {

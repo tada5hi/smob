@@ -13,7 +13,7 @@ export function isObject(item: unknown) : item is Record<string, any> {
     );
 }
 
-export function isSafeObject(object: Record<string, any>) : boolean {
+export function isSafeInput(object: any) : boolean {
     try {
         JSON.stringify(object);
         return true;
