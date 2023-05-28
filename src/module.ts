@@ -29,10 +29,6 @@ function baseMerger<B extends MergerSource[]>(
     options: Options,
     ...sources: B
 ) : MergerResult<B> {
-    if (!sources.length) {
-        throw new SyntaxError('At least one input element is required.');
-    }
-
     let target : MergerSourceUnwrap<B>;
     let source : MergerSourceUnwrap<B> | undefined;
     if (options.priority === PriorityName.RIGHT) {
@@ -159,6 +155,10 @@ export function createMerger(input?: OptionsInput) : Merger {
     return <B extends MergerSource[]>(
         ...sources: B
     ) : MergerResult<B> => {
+        if (!sources.length) {
+            throw new SyntaxError('At least one input element is required.');
+        }
+
         if (options.clone) {
             return baseMerger(options, ...clone(sources));
         }
@@ -182,14 +182,3 @@ export function createMerger(input?: OptionsInput) : Merger {
 }
 
 export const merge = createMerger();
-
-export function assign<A extends Record<string, any>, B extends Record<string, any>[]>(
-    target: A,
-    ...sources: B
-) : A & MergerResult<B> {
-    return createMerger({
-        inPlace: true,
-        priority: 'left',
-        array: false,
-    })(target, ...sources) as A & MergerResult<B>;
-}

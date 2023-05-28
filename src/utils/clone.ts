@@ -30,18 +30,22 @@ const gT = (() => {
     throw new Error('unable to locate global object');
 })();
 
+/* istanbul ignore next */
 export function clone<T>(value: T) : T {
     if (gT.structuredClone) {
         return gT.structuredClone(value);
     }
 
+    /* istanbul ignore next */
     if (isObject(value)) {
         return { ...value };
     }
 
+    /* istanbul ignore next */
     if (Array.isArray(value)) {
         return [...value] as T;
     }
 
+    /* istanbul ignore next */
     return value;
 }

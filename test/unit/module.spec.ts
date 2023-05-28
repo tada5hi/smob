@@ -308,4 +308,8 @@ describe('src/module/*.ts', () => {
 
         expect(xB).toEqual(['baz', 'bar']);
     });
+
+    it('should throw error when input source is missing', () => {
+        expect(merge).toThrow(SyntaxError);
+    });
 })
