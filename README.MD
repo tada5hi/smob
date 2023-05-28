@@ -63,8 +63,8 @@ import { createMerger } from 'smob';
 
 const merge = createMerger({ array: false });
 
-console.log(merge({ a: [1,2,3] }, { a: [4,5,6] }));
-// => { a: [1,2,3] }
+merge({ a: [1,2,3] }, { a: [4,5,6] });
+// { a: [1,2,3] }
 ```
 
 **ArrayDistinct**
@@ -73,8 +73,8 @@ import { createMerger } from 'smob';
 
 const merge = createMerger({ arrayDistinct: true });
 
-console.log(merge({ a: [1,2,3] }, { a: [3,4,5] }));
-// => { a: [1,2,3,4,5] }
+merge({ a: [1,2,3] }, { a: [3,4,5] });
+// { a: [1,2,3,4,5] }
 ```
 
 **Priority**
@@ -103,8 +103,8 @@ const merge = createMerger({
     }
 });
 
-console.log(merge({ a: 1 }, { a: 2 }, { a: 3 }));
-// => { a: 6 }
+merge({ a: 1 }, { a: 2 }, { a: 3 });
+// { a: 6 }
 ```
 
 A returned value indicates that the strategy has been applied.
