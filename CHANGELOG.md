@@ -1,3 +1,16 @@
+# [1.3.0](https://github.com/Tada5hi/smob/compare/v1.2.0...v1.3.0) (2023-05-28)
+
+
+### Bug Fixes
+
+* move sources length check to create-merger ([c55bfc5](https://github.com/Tada5hi/smob/commit/c55bfc5b25adafee35c3af7f2d8672879c898e7e))
+
+
+### Features
+
+* deep clone input sources ([384acff](https://github.com/Tada5hi/smob/commit/384acff632e60d967a92371937d0bb53b35edda4))
+* refactored merger to support arrays ([2185ebe](https://github.com/Tada5hi/smob/commit/2185ebe32b963e954265a71fad4bb302deb88e29))
+
 # [1.3.0-alpha.2](https://github.com/Tada5hi/smob/compare/v1.3.0-alpha.1...v1.3.0-alpha.2) (2023-05-28)
 
 
