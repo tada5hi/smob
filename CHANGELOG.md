@@ -1,3 +1,16 @@
+# [1.2.0](https://github.com/Tada5hi/smob/compare/v1.1.1...v1.2.0) (2023-05-28)
+
+
+### Bug Fixes
+
+* add generic argument for distinct-array util ([4d31b24](https://github.com/Tada5hi/smob/commit/4d31b24e0ca63f54b538d58eb0683a36170269ce))
+* optimize array merge ([240ce25](https://github.com/Tada5hi/smob/commit/240ce2577eb99ee12fb9186b2f41fddb610cf3c0))
+
+
+### Features
+
+* split regular and distinct array merge + support multiple input arrays ([f7d4a75](https://github.com/Tada5hi/smob/commit/f7d4a757e22523ca3a74c1008f78cc12813ee341))
+
 ## [1.1.1](https://github.com/Tada5hi/smob/compare/v1.1.0...v1.1.1) (2023-05-20)
 
 
