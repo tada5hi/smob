@@ -1,3 +1,10 @@
+# [1.3.0-alpha.2](https://github.com/Tada5hi/smob/compare/v1.3.0-alpha.1...v1.3.0-alpha.2) (2023-05-28)
+
+
+### Features
+
+* deep clone input sources ([384acff](https://github.com/Tada5hi/smob/commit/384acff632e60d967a92371937d0bb53b35edda4))
+
 # [1.3.0-alpha.1](https://github.com/Tada5hi/smob/compare/v1.2.0...v1.3.0-alpha.1) (2023-05-28)
 
 
