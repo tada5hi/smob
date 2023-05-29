@@ -1,3 +1,17 @@
+# [1.4.0](https://github.com/Tada5hi/smob/compare/v1.3.0...v1.4.0) (2023-05-29)
+
+
+### Bug Fixes
+
+* better polyfill implementation for cloning arrays and objects ([fad6beb](https://github.com/Tada5hi/smob/commit/fad6bebd9d7dc016f5c8a153e1e8181f12704bfb))
+* create a new weak map for each source ([4ed64d2](https://github.com/Tada5hi/smob/commit/4ed64d26bc0d2acc7fe075ad45a3cccd3bd4aa19))
+* remove unused utility methods + applied linter ([76baf8e](https://github.com/Tada5hi/smob/commit/76baf8eee28359480878dce17d0dd31143c2610e))
+
+
+### Features
+
+* use weak-map instead of json-stringify for circular reference handling ([33b4ea4](https://github.com/Tada5hi/smob/commit/33b4ea4cef102dec3334f08c66f25fbb84bcafb4))
+
 # [1.3.0](https://github.com/Tada5hi/smob/compare/v1.2.0...v1.3.0) (2023-05-28)
 
 

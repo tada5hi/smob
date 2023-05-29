@@ -1,6 +1,6 @@
 {
     "name": "smob",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "description": "Zero dependency library to safe merge objects.",
     "main": "dist/index.cjs",
     "module": "dist/index.mjs",
