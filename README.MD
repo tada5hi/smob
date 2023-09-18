@@ -6,7 +6,7 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/Tada5hi/smob/badge.svg?targetFile=package.json)](https://snyk.io/test/github/Tada5hi/smob?targetFile=package.json)
 [![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
 
-Zero dependency library to **s**afe **m**erge **ob**jects and arrays.
+A zero dependency library to **s**afe **m**erge **ob**jects and arrays with customizable behavior.
 
 **Table of Contents**
 
