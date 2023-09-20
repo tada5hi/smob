@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/Tada5hi/smob/compare/v1.4.0...v1.4.1) (2023-09-20)
+
+
+### Bug Fixes
+
+* removed superfluous cut utility ([b8f5826](https://github.com/Tada5hi/smob/commit/b8f5826a022d32225a3069f309e159c89b3494cc))
+
 # [1.4.0](https://github.com/Tada5hi/smob/compare/v1.3.0...v1.4.0) (2023-05-29)
 
 
