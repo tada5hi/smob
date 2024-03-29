@@ -13,7 +13,7 @@ import {
     distinctArray,
     hasOwnProperty,
     isObject,
-    isSafeKey,
+    isSafeKey, togglePriority,
 } from './utils';
 
 function baseMerger<B extends MergerSource[]>(
@@ -22,7 +22,18 @@ function baseMerger<B extends MergerSource[]>(
 ) : MergerResult<B> {
     let target : MergerSourceUnwrap<B>;
     let source : MergerSourceUnwrap<B> | undefined;
-    if (context.options.priority === PriorityName.RIGHT) {
+
+    let { priority } = context.options;
+    if (sources.length >= 2) {
+        if (
+            Array.isArray(sources.at(0)) &&
+            Array.isArray(sources.at(-1))
+        ) {
+            priority = context.options.arrayPriority;
+        }
+    }
+
+    if (priority === PriorityName.RIGHT) {
         target = sources.pop() as MergerSourceUnwrap<B>;
         source = sources.pop() as MergerSourceUnwrap<B>;
     } else {
@@ -124,7 +135,11 @@ function baseMerger<B extends MergerSource[]>(
                     Array.isArray(target[key]) &&
                     Array.isArray(source[key])
                 ) {
-                    switch (context.options.arrayPriority) {
+                    const arrayPriority = context.options.priority !== context.options.arrayPriority ?
+                        togglePriority(context.options.arrayPriority) :
+                        context.options.priority;
+
+                    switch (arrayPriority) {
                         case PriorityName.LEFT:
                             Object.assign(target, {
                                 [key]: baseMerger(context, target[key] as MergerSource, source[key] as MergerSource),

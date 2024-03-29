@@ -239,10 +239,61 @@ describe('src/module/*.ts', () => {
     });
 
     it('should merge arrays with right priority', () => {
-        const merger = createMerger({ priority: 'right' });
-        expect(merger([4, 5, 6], [1, 2, 3, 4])).toEqual([1, 2, 3, 4, 4, 5, 6]);
+        const merger = createMerger({ arrayPriority: 'right' });
+        expect(merger([4, 5, 6], [1, 2, 3])).toEqual([1, 2, 3, 4, 5, 6]);
 
         expect(merger({ foo: [4, 5, 6] }, { foo: [1, 2, 3, 4] })).toEqual({ foo: [1, 2, 3, 4, 4, 5, 6] });
+    });
+
+    it('should merge with different priorities for arrays and objects', () => {
+        const merger = createMerger({ arrayPriority: 'left', priority: 'right' });
+        expect(merger({ foo: [1, 2, 3], bar: 'baz' }, { foo: [4, 5, 6], bar: 'boz' })).toEqual({
+            foo: [1, 2, 3, 4, 5, 6],
+            bar: 'boz',
+        });
+
+        expect(merger(
+            {
+                foo: [1, 2, 3],
+                bar: 'baz',
+                biz: 'bar',
+                boz: 'baz',
+            },
+            {
+                foo: [4, 5, 6],
+                bar: 'biz',
+                biz: 'boz',
+            },
+            {
+                foo: [7, 8, 9],
+                bar: 'boz',
+            },
+        )).toEqual({
+            foo: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+            bar: 'boz',
+            biz: 'boz',
+            boz: 'baz',
+        });
+
+        expect(merger(
+            {
+                foo: {
+                    bar: [1, 2, 3],
+                },
+                bar: 'baz',
+            },
+            {
+                foo: {
+                    bar: [4, 5, 6],
+                },
+                bar: 'boz',
+            },
+        )).toEqual({
+            foo: {
+                bar: [1, 2, 3, 4, 5, 6],
+            },
+            bar: 'boz',
+        });
     });
 
     it('should merge with destruction', () => {

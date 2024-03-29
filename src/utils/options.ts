@@ -11,3 +11,9 @@ export function buildOptions(options: OptionsInput = {}) : Options {
 
     return options as Options;
 }
+
+export function togglePriority(priority: `${PriorityName}`) {
+    return priority === PriorityName.LEFT ?
+        `${PriorityName.RIGHT}` :
+        `${PriorityName.LEFT}`;
+}
