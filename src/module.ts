@@ -47,7 +47,7 @@ function baseMerger<B extends MergerSource[]>(
     ) {
         target.push(...source as MergerSource[]);
 
-        if (context.options.priority === PriorityName.RIGHT) {
+        if (context.options.arrayPriority === PriorityName.RIGHT) {
             return baseMerger(
                 context,
                 ...sources,
@@ -124,7 +124,7 @@ function baseMerger<B extends MergerSource[]>(
                     Array.isArray(target[key]) &&
                     Array.isArray(source[key])
                 ) {
-                    switch (context.options.priority) {
+                    switch (context.options.arrayPriority) {
                         case PriorityName.LEFT:
                             Object.assign(target, {
                                 [key]: baseMerger(context, target[key] as MergerSource, source[key] as MergerSource),
@@ -174,14 +174,14 @@ export function createMerger(input?: OptionsInput) : Merger {
         }
 
         if (!options.inPlace) {
-            if (options.priority === PriorityName.LEFT) {
-                if (Array.isArray(sources[0])) {
+            if (Array.isArray(sources[0])) {
+                if (options.arrayPriority === PriorityName.LEFT) {
                     sources.unshift([]);
                 } else {
-                    sources.unshift({});
+                    sources.push([]);
                 }
-            } else if (Array.isArray(sources[0])) {
-                sources.push([]);
+            } else if (options.priority === PriorityName.LEFT) {
+                sources.unshift({});
             } else {
                 sources.push({});
             }

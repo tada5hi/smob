@@ -17,6 +17,13 @@ export type Options = {
      */
     arrayDistinct: boolean,
     /**
+     * Merge sources from left-to-right or right-to-left.
+     * From v2 upwards default to left independent of the option priority.
+     *
+     * default: left (aka. options.priority)
+     */
+    arrayPriority: `${PriorityName}`,
+    /**
      * Strategy to merge different object keys.
      *
      * @param target
@@ -38,6 +45,7 @@ export type Options = {
     clone?: boolean,
     /**
      * Merge sources from left-to-right or right-to-left.
+     * From v2 upwards default to right.
      *
      * default: left
      */
