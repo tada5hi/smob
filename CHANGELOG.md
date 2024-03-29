@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/Tada5hi/smob/compare/v1.4.1...v1.5.0) (2024-03-29)
+
+
+### Features
+
+* introduce arrayPriority option ([#328](https://github.com/Tada5hi/smob/issues/328)) ([7d287bf](https://github.com/Tada5hi/smob/commit/7d287bf1238c15b5670e91b7f3a7100518ed3ac0))
+
 ## [1.4.1](https://github.com/Tada5hi/smob/compare/v1.4.0...v1.4.1) (2023-09-20)
 
 
