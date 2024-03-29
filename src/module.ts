@@ -13,7 +13,7 @@ import {
     distinctArray,
     hasOwnProperty,
     isObject,
-    isSafeKey,
+    isSafeKey, togglePriority,
 } from './utils';
 
 function baseMerger<B extends MergerSource[]>(
@@ -22,7 +22,18 @@ function baseMerger<B extends MergerSource[]>(
 ) : MergerResult<B> {
     let target : MergerSourceUnwrap<B>;
     let source : MergerSourceUnwrap<B> | undefined;
-    if (context.options.priority === PriorityName.RIGHT) {
+
+    let { priority } = context.options;
+    if (sources.length >= 2) {
+        if (
+            Array.isArray(sources.at(0)) &&
+            Array.isArray(sources.at(-1))
+        ) {
+            priority = context.options.arrayPriority;
+        }
+    }
+
+    if (priority === PriorityName.RIGHT) {
         target = sources.pop() as MergerSourceUnwrap<B>;
         source = sources.pop() as MergerSourceUnwrap<B>;
     } else {
@@ -47,7 +58,7 @@ function baseMerger<B extends MergerSource[]>(
     ) {
         target.push(...source as MergerSource[]);
 
-        if (context.options.priority === PriorityName.RIGHT) {
+        if (context.options.arrayPriority === PriorityName.RIGHT) {
             return baseMerger(
                 context,
                 ...sources,
@@ -124,7 +135,11 @@ function baseMerger<B extends MergerSource[]>(
                     Array.isArray(target[key]) &&
                     Array.isArray(source[key])
                 ) {
-                    switch (context.options.priority) {
+                    const arrayPriority = context.options.priority !== context.options.arrayPriority ?
+                        togglePriority(context.options.arrayPriority) :
+                        context.options.arrayPriority;
+
+                    switch (arrayPriority) {
                         case PriorityName.LEFT:
                             Object.assign(target, {
                                 [key]: baseMerger(context, target[key] as MergerSource, source[key] as MergerSource),
@@ -174,14 +189,24 @@ export function createMerger(input?: OptionsInput) : Merger {
         }
 
         if (!options.inPlace) {
-            if (options.priority === PriorityName.LEFT) {
-                if (Array.isArray(sources[0])) {
-                    sources.unshift([]);
-                } else {
-                    sources.unshift({});
-                }
-            } else if (Array.isArray(sources[0])) {
+            if (
+                Array.isArray(sources.at(0)) &&
+                options.arrayPriority === PriorityName.LEFT
+            ) {
+                sources.unshift([]);
+                return baseMerger(ctx, ...sources);
+            }
+
+            if (
+                Array.isArray(sources.at(-1)) &&
+                options.arrayPriority === PriorityName.RIGHT
+            ) {
                 sources.push([]);
+                return baseMerger(ctx, ...sources);
+            }
+
+            if (options.priority === PriorityName.LEFT) {
+                sources.unshift({});
             } else {
                 sources.push({});
             }

@@ -33,9 +33,10 @@ const output = merge(...sources);
 The following merge options are set by default:
 - **array**: `true` Merge object array properties.
 - **arrayDistinct**: `false` Remove duplicates, when merging array elements.
+- **arrayPriority**: `left` (options.priority) The source aka leftmost array has by **default** the highest priority.
 - **clone**: `false` Deep clone input sources.
 - **inPlace**: `false` Merge sources in place.
-- **priority**: `left` The source aka leftmost array/object has by **default** the highest priority.
+- **priority**: `left` The source aka leftmost object has by **default** the highest priority.
 
 The merge behaviour can be changed by creating a custom [merger](#merger).
 
