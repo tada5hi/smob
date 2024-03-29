@@ -137,7 +137,7 @@ function baseMerger<B extends MergerSource[]>(
                 ) {
                     const arrayPriority = context.options.priority !== context.options.arrayPriority ?
                         togglePriority(context.options.arrayPriority) :
-                        context.options.priority;
+                        context.options.arrayPriority;
 
                     switch (arrayPriority) {
                         case PriorityName.LEFT:

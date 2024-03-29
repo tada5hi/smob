@@ -246,7 +246,11 @@ describe('src/module/*.ts', () => {
     });
 
     it('should merge with different priorities for arrays and objects', () => {
-        const merger = createMerger({ arrayPriority: 'left', priority: 'right' });
+        const merger = createMerger({
+            arrayPriority: 'left',
+            priority: 'right',
+        });
+
         expect(merger({ foo: [1, 2, 3], bar: 'baz' }, { foo: [4, 5, 6], bar: 'boz' })).toEqual({
             foo: [1, 2, 3, 4, 5, 6],
             bar: 'boz',
