@@ -189,13 +189,23 @@ export function createMerger(input?: OptionsInput) : Merger {
         }
 
         if (!options.inPlace) {
-            if (Array.isArray(sources[0])) {
-                if (options.arrayPriority === PriorityName.LEFT) {
-                    sources.unshift([]);
-                } else {
-                    sources.push([]);
-                }
-            } else if (options.priority === PriorityName.LEFT) {
+            if (
+                Array.isArray(sources.at(0)) &&
+                options.arrayPriority === PriorityName.LEFT
+            ) {
+                sources.unshift([]);
+                return baseMerger(ctx, ...sources);
+            }
+
+            if (
+                Array.isArray(sources.at(-1)) &&
+                options.arrayPriority === PriorityName.RIGHT
+            ) {
+                sources.push([]);
+                return baseMerger(ctx, ...sources);
+            }
+
+            if (options.priority === PriorityName.LEFT) {
                 sources.unshift({});
             } else {
                 sources.push({});
