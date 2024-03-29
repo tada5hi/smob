@@ -292,11 +292,17 @@ describe('src/module/*.ts', () => {
                 },
                 bar: 'boz',
             },
+            {
+                foo: {
+                    bar: [7, 8, 9],
+                },
+                bar: 'biz',
+            },
         )).toEqual({
             foo: {
-                bar: [1, 2, 3, 4, 5, 6],
+                bar: [1, 2, 3, 4, 5, 6, 7, 8, 9],
             },
-            bar: 'boz',
+            bar: 'biz',
         });
     });
 
