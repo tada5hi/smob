@@ -5,6 +5,13 @@
 
 * introduce arrayPriority option ([#328](https://github.com/Tada5hi/smob/issues/328)) ([7d287bf](https://github.com/Tada5hi/smob/commit/7d287bf1238c15b5670e91b7f3a7100518ed3ac0))
 
+## [1.6.1](https://github.com/tada5hi/smob/compare/smob-v1.6.0...smob-v1.6.1) (2026-02-11)
+
+
+### Bug Fixes
+
+* set min node engine version to v20.0.0 ([ec4d2d9](https://github.com/tada5hi/smob/commit/ec4d2d90c9ac9e0ed8a2f1865e6c882b0d04250b))
+
 ## [1.6.0](https://github.com/tada5hi/smob/compare/smob-v1.5.0...smob-v1.6.0) (2026-02-11)
 
 
