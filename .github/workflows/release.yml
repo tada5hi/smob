@@ -51,30 +51,16 @@ jobs:
                 if: steps.release.outputs.releases_created == 'true'
                 run: npx workspaces-publish
 
-    coverage:
-        name: Coverage
-        needs: [release]
-        runs-on: ubuntu-latest
-        if: ${{ github.ref_name == 'master' }}
-
-        steps:
-            -   name: Checkout
-                uses: actions/checkout@v6
-
-            -   name: Install
-                uses: ./.github/actions/install
-                with:
-                    node-version: ${{ env.PRIMARY_NODE_VERSION }}
-
-            -   name: Build
-                uses: ./.github/actions/build
-
             -   name: Coverage
+                if: steps.release.outputs.releases_created == 'true'
                 run: |
                     npm run test:coverage
 
             -   name: Upload report
+                if: steps.release.outputs.releases_created == 'true'
                 uses: codecov/codecov-action@v4.1.1
                 with:
                     token: ${{ secrets.codecov }}
                     directory: ./coverage/
+
+
