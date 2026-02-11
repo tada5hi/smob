@@ -1,0 +1,80 @@
+name: Release
+
+on:
+    push:
+        branches:
+            - master
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+env:
+    NODE_VERSION: 20
+
+permissions:
+    packages: write
+    contents: write
+    pull-requests: write
+    id-token: write
+
+defaults:
+    run:
+        shell: bash
+
+jobs:
+    release:
+        name: Release
+        runs-on: ubuntu-latest
+
+        steps:
+            -   uses: googleapis/release-please-action@v4
+                id: release
+                with:
+                    token: ${{ secrets.GITHUB_TOKEN }}
+
+            -   name: Checkout
+                if: steps.release.outputs.releases_created == 'true'
+                uses: actions/checkout@v6
+                with:
+                    fetch-depth: 0
+
+            -   name: Install
+                if: steps.release.outputs.releases_created == 'true'
+                uses: ./.github/actions/install
+                with:
+                    node-version: ${{ env.NODE_VERSION }}
+
+            -   name: Build
+                if: steps.release.outputs.releases_created == 'true'
+                uses: ./.github/actions/build
+
+            -   name: Publish
+                if: steps.release.outputs.releases_created == 'true'
+                run: npx workspaces-publish
+
+    coverage:
+        name: Coverage
+        needs: [release]
+        runs-on: ubuntu-latest
+        if: ${{ github.ref_name == 'master' }}
+
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v6
+
+            -   name: Install
+                uses: ./.github/actions/install
+                with:
+                    node-version: ${{ env.PRIMARY_NODE_VERSION }}
+
+            -   name: Build
+                uses: ./.github/actions/build
+
+            -   name: Coverage
+                run: |
+                    npm run test:coverage
+
+            -   name: Upload report
+                uses: codecov/codecov-action@v4.1.1
+                with:
+                    token: ${{ secrets.codecov }}
+                    directory: ./coverage/
