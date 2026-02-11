@@ -74,7 +74,7 @@ jobs:
                     npm run test:coverage
 
             -   name: Upload report
-                uses: codecov/codecov-action@v4.1.1
+                uses: codecov/codecov-action@v5.5.2
                 with:
                     token: ${{ secrets.codecov }}
                     directory: ./coverage/
