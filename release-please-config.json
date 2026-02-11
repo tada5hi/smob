@@ -2,8 +2,6 @@
     "release-type": "node",
     "bump-minor-pre-major": true,
     "bump-patch-for-minor-pre-major": true,
-    "initial-version": "1.5.0",
-    "release-as": "1.6.0",
     "packages": {
         ".": { }
     },
