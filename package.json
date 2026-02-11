@@ -14,8 +14,11 @@
         }
     },
     "files": [
-        "dist/"
+        "dist"
     ],
+    "engines": {
+        "node": ">=22.0.0"
+    },
     "scripts": {
         "build:types": "tsc --emitDeclarationOnly",
         "build:js": "rollup -c",
@@ -23,8 +26,8 @@
         "commit": "npx git-cz",
         "lint": "eslint --ext .js,.ts ./src",
         "lint:fix": "npm run lint -- --fix",
-        "test": "cross-env NODE_ENV=test jest --config ./test/jest.config.js",
-        "test:coverage": "npm run test -- --coverage",
+        "test": "cross-env NODE_ENV=test vitest run --config test/vitest.config.ts",
+        "test:coverage": "cross-env NODE_ENV=test vitest run --config test/vitest.config.ts --coverage",
         "prepare": "npx husky install",
         "prepublishOnly": "npm run build"
     },
@@ -51,21 +54,19 @@
     },
     "homepage": "https://github.com/Tada5hi/smob#readme",
     "devDependencies": {
-        "@rollup/plugin-node-resolve": "^15.2.3",
-        "@swc/core": "^1.4.11",
-        "@swc/jest": "^0.2.29",
-        "@tada5hi/commitlint-config": "^1.2.0",
-        "@tada5hi/eslint-config-typescript": "^1.2.10",
-        "@tada5hi/semantic-release": "^0.3.1",
-        "@tada5hi/tsconfig": "^0.5.1",
-        "@types/jest": "^29.5.3",
-        "@types/node": "^20.10.4",
-        "cross-env": "^7.0.3",
-        "eslint": "^8.57.0",
-        "husky": "^9.0.11",
-        "jest": "^29.6.1",
-        "rollup": "^4.13.2",
-        "semantic-release": "^23.0.6",
-        "typescript": "^5.4.3"
+        "@rollup/plugin-node-resolve": "^16.0.3",
+        "@swc/core": "^1.15.11",
+        "@tada5hi/commitlint-config": "^1.2.7",
+        "@tada5hi/eslint-config-typescript": "^1.2.18",
+        "@tada5hi/tsconfig": "^0.7.0",
+        "@types/node": "^25.2.3",
+        "@vitest/coverage-v8": "^4.0.18",
+        "cross-env": "^10.1.0",
+        "eslint": "^8.57.1",
+        "husky": "^9.1.7",
+        "rollup": "^4.57.1",
+        "typescript": "^5.9.3",
+        "vitest": "^4.0.18",
+        "workspaces-publish": "^1.5.0"
     }
 }

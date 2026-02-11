@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import { polyfillClone } from '../../../src';
 
 describe('src/utils/clone', () => {

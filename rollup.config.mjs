@@ -1,6 +1,6 @@
 import resolve from '@rollup/plugin-node-resolve';
-import { transform } from "@swc/core";
-import pkg from './package.json' assert {type: 'json'};
+import { transform } from '@swc/core';
+import pkg from './package.json' with {type: 'json'};
 
 const extensions = [
     '.js', '.jsx', '.ts', '.tsx',
@@ -16,7 +16,7 @@ export default [
 
         plugins: [
             // Allows node_modules resolution
-            resolve({ extensions}),
+            resolve({ extensions }),
 
             // Compile TypeScript/JavaScript files
             {
@@ -24,27 +24,27 @@ export default [
                 transform(code) {
                     return transform(code, {
                         jsc: {
-                            target: 'es2016',
+                            target: 'es2022',
                             parser: {
-                                syntax: 'typescript'
+                                syntax: 'typescript',
                             },
-                            loose: true
+                            loose: true,
                         },
-                        sourceMaps: true
+                        sourceMaps: true,
                     });
-                }
-            }
+                },
+            },
         ],
         output: [
             {
                 file: pkg.main,
                 format: 'cjs',
-                sourcemap: true
+                sourcemap: true,
             }, {
                 file: pkg.module,
                 format: 'esm',
-                sourcemap: true
-            }
-        ]
-    }
+                sourcemap: true,
+            },
+        ],
+    },
 ];

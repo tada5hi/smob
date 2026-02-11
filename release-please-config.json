@@ -1,0 +1,10 @@
+{
+    "release-type": "node",
+    "bump-minor-pre-major": true,
+    "bump-patch-for-minor-pre-major": true,
+    "initial-version": "1.5.0",
+    "packages": {
+        ".": { }
+    },
+    "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json"
+}

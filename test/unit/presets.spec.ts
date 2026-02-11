@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import { assign } from '../../src';
 
 describe('src/presets', () => {
