@@ -55,7 +55,7 @@
     "homepage": "https://github.com/Tada5hi/smob#readme",
     "devDependencies": {
         "@rollup/plugin-node-resolve": "^16.0.3",
-        "@swc/core": "^1.15.11",
+        "@swc/core": "^1.15.13",
         "@tada5hi/commitlint-config": "^1.2.7",
         "@tada5hi/eslint-config-typescript": "^1.2.18",
         "@tada5hi/tsconfig": "^0.7.0",
