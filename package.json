@@ -59,7 +59,7 @@
         "@tada5hi/commitlint-config": "^1.2.7",
         "@tada5hi/eslint-config-typescript": "^1.2.18",
         "@tada5hi/tsconfig": "^0.7.0",
-        "@types/node": "^25.2.3",
+        "@types/node": "^25.3.1",
         "@vitest/coverage-v8": "^4.0.18",
         "cross-env": "^10.1.0",
         "eslint": "^8.57.1",
