@@ -85,11 +85,11 @@ function baseMerger<B extends MergerSource[]>(
         for (let i = 0; i < keys.length; i++) {
             const key = keys[i] as (keyof MergerSourceUnwrap<B>);
 
-            if (hasOwnProperty(target, key)) {
-                if (!isSafeKey(key as string)) {
-                    continue;
-                }
+            if (!isSafeKey(key as string)) {
+                continue;
+            }
 
+            if (hasOwnProperty(target, key)) {
                 if (context.options.strategy) {
                     const applied = context.options.strategy(target, key as string, source[key]);
                     if (typeof applied !== 'undefined') {

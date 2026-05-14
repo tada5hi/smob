@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { createMerger, merge } from '../../src';
+import { assign, createMerger, merge } from '../../src';
 
 class MyCircularClass {
     ref : MyCircularClass;
@@ -191,7 +191,42 @@ describe('src/module/*.ts', () => {
     it('should not merge unsafe key', () => {
         const merger = createMerger({ priority: 'right' });
         const merged = merger({ prototype: null }, { prototype: 1 });
-        expect(merged).toEqual({ prototype: 1 });
+        expect(Object.hasOwn(merged as object, 'prototype')).toBe(false);
+    });
+
+    it('should not pollute prototype via __proto__ key when target lacks that own key', () => {
+        const payload = JSON.parse('{"__proto__":{"isAdmin":true,"role":"admin"}}');
+        const result = merge({ name: 'guest' }, payload) as Record<string, any>;
+
+        expect(Object.hasOwn(result, 'isAdmin')).toBe(false);
+        expect(result.isAdmin).toBeUndefined();
+        expect(result.role).toBeUndefined();
+        expect(Object.getPrototypeOf(result)).toBe(Object.prototype);
+        expect(({} as Record<string, any>).isAdmin).toBeUndefined();
+    });
+
+    it('should not pollute prototype of in-place target via __proto__ key', () => {
+        const target : Record<string, any> = { x: 1 };
+        assign(target, JSON.parse('{"__proto__":{"polluted":"YES"}}'));
+
+        expect(target.polluted).toBeUndefined();
+        expect(Object.getPrototypeOf(target)).toBe(Object.prototype);
+    });
+
+    it('should not propagate __proto__ pollution into nested merges', () => {
+        const payload = JSON.parse('{"sub":{"__proto__":{"poll":"DEEP"}}}');
+        const result = merge({ sub: { a: 1 } }, payload) as Record<string, any>;
+
+        expect(result.sub.poll).toBeUndefined();
+        expect(Object.getPrototypeOf(result.sub)).toBe(Object.prototype);
+    });
+
+    it('should reject constructor and prototype keys when target lacks them as own props', () => {
+        const result = merge({}, JSON.parse('{"constructor":1,"prototype":2}')) as Record<string, any>;
+
+        expect(Object.hasOwn(result, 'constructor')).toBe(false);
+        expect(Object.hasOwn(result, 'prototype')).toBe(false);
+        expect(result.constructor).toBe(Object.prototype.constructor);
     });
 
     it('should return optimized return type', () => {
