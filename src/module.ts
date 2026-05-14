@@ -1,6 +1,7 @@
 import { PriorityName } from './constants';
 import type {
-    Merger, MergerContext,
+    Merger, 
+    MergerContext,
     MergerResult,
     MergerSource,
     MergerSourceUnwrap,
@@ -13,7 +14,8 @@ import {
     distinctArray,
     hasOwnProperty,
     isObject,
-    isSafeKey, togglePriority,
+    isSafeKey, 
+    togglePriority,
 } from './utils';
 
 function baseMerger<B extends MergerSource[]>(

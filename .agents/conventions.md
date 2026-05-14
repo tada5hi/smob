@@ -4,15 +4,14 @@
 
 | Tool                                   | Purpose                                                              |
 |----------------------------------------|----------------------------------------------------------------------|
-| TypeScript 5 (`@tada5hi/tsconfig`)     | Type checking; emits `.d.ts` into `dist/` for the published bundle.  |
-| Rollup 4 + `@swc/core`                 | Bundles `src/index.ts` to `dist/index.cjs` and `dist/index.mjs`.     |
-| `@rollup/plugin-node-resolve`          | Allows Rollup to resolve relative imports across `src/`.             |
+| TypeScript 5 (`@tada5hi/tsconfig`)     | Type checking via `npm run build:types` (`tsc`, `noEmit: true`); also used by editors/IDEs. |
+| tsdown (Rolldown + Oxc)                | `npm run build:js` — bundles `src/index.ts` to `dist/index.{cjs,mjs}` and emits `dist/index.d.{cts,mts}` declarations. |
 | Vitest 4                               | Test runner (config at `test/vitest.config.ts`).                     |
-| ESLint 8 (`@tada5hi/eslint-config-typescript`) | Linting; scans `./src` only.                                 |
+| ESLint 10 (`@tada5hi/eslint-config`) + `typescript-eslint` | Linting via flat config (`eslint.config.js`).    |
 | Husky 9                                | Git hooks (currently only `commit-msg`).                             |
 | commitlint + `@tada5hi/commitlint-config` | Validates Conventional Commits on every commit.                   |
 | release-please                         | Automates version bumps, CHANGELOG, and GitHub releases.             |
-| `workspaces-publish`                   | Publishes the package to npm from CI.                                |
+| `tada5hi/monoship@v2`                  | GitHub Action used by the release workflow to publish to npm.        |
 | Codecov                                | Receives coverage upload from the release workflow.                  |
 
 ## Workflow
@@ -20,22 +19,21 @@
 After making source changes:
 
 1. `npm run build` if you touched anything in `src/` (especially before manually testing the dist output).
-2. `npm run lint` (or `npm run lint:fix`) — ESLint scans only `./src`.
+2. `npm run lint` (or `npm run lint:fix`).
 3. `npm run test` — Vitest runs against `src/` directly, no build needed for tests.
 4. Commit with a Conventional Commits message (commitlint will reject otherwise).
 
-There is no `prepare` build of the artifact at commit time; `prepublishOnly` runs the build right before `npm publish` (which only happens from CI).
+The build step is not bound to commit time; the release workflow runs `npm run build` before publishing (which only happens from CI).
 
 ## Code Style
 
-- **Module format**: ESM source (`import`/`export`). The build produces dual CJS + ESM.
+- **Module format**: ESM source (`"type": "module"`, `import`/`export`). The build produces dual CJS + ESM.
 - **Indentation**: 4 spaces (enforced by `.editorconfig`). LF line endings, final newline, no trailing whitespace.
-- **Linting**: extends `@tada5hi/eslint-config-typescript` with project-specific overrides in `.eslintrc`:
+- **Linting**: ESLint 10 flat config in `eslint.config.js`, extending `@tada5hi/eslint-config` with project-specific overrides:
   - `class-methods-use-this`, `no-continue`, `no-shadow`, `no-use-before-define`, `no-useless-escape`, `no-nested-ternary` — **off**.
   - `@typescript-eslint/no-unused-vars`, `@typescript-eslint/no-use-before-define` — **off**.
-  - `import/no-extraneous-dependencies` allows devDependencies in `test/**`, `*.spec.{js,ts}`, and `rollup.config.mjs`.
-  - `**/dist/*` and `**/*.d.ts` are ignored.
-- **Type-aware ESLint**: parses with `tsconfig.eslint.json` (covers `src/`, `test/`, `commitlint.config.js`, `rollup.config.mjs`).
+  - `import/no-extraneous-dependencies` allows devDependencies in `test/**`, `*.spec.{js,ts}`, `tsdown.config.ts`, `eslint.config.js`, and `commitlint.config.mjs`.
+  - `dist/**` and `**/*.d.ts` are ignored.
 
 ## Naming Conventions
 
@@ -81,17 +79,17 @@ Common types: `feat`, `fix`, `chore`, `build`, `ci`, `docs`, `refactor`, `test`.
 
 - `target: ES2022`, `module: ESNext`, `moduleResolution: bundler`
 - `lib: ["ESNext", "DOM"]` (DOM is needed for `globalThis` typing in `src/utils/clone.ts`)
-- `outDir: dist` — only `tsc --emitDeclarationOnly` runs against this config (Rollup handles JS emission via SWC).
-
-`tsconfig.eslint.json` extends `tsconfig.json` and broadens `include` to cover tests and config files for type-aware lint rules.
+- `noEmit: true`, `allowImportingTsExtensions: true` — no emission from `tsc`; tsdown handles all JS/`.d.ts` output.
+- `noUncheckedIndexedAccess: false` — re-disabled (the base config enables it) because the merge hot path uses indexed `for` loops over `Object.keys()`, which would otherwise return `string | undefined` from each index and force pervasive non-null assertions.
 
 ## Build Output
 
-`npm run build` produces, in `dist/`:
+`npm run build` runs `tsdown` and produces, in `dist/`:
 
 - `index.cjs` — CommonJS bundle (matches `package.json#main`).
 - `index.mjs` — ES module bundle (matches `package.json#module`).
-- `index.d.ts` (and supporting `.d.ts` files) — emitted by `tsc --emitDeclarationOnly`.
+- `index.d.cts` — declarations for the CJS entry.
+- `index.d.mts` — declarations for the ESM entry (also `package.json#types`).
 - `*.map` — sourcemaps for both bundles.
 
 `dist/` is `.gitignore`d but listed in `package.json#files` so it ships to npm. Only `dist/` is published; everything else is excluded.
@@ -100,11 +98,11 @@ Common types: `feat`, `fix`, `chore`, `build`, `ci`, `docs`, `refactor`, `test`.
 
 Fully automated via **release-please** (`.github/workflows/release.yml`):
 
-1. Push to `master` triggers `googleapis/release-please-action@v4`.
+1. Push to `master` triggers `googleapis/release-please-action@v5`.
 2. release-please opens / updates a release PR that bumps `package.json`, updates `CHANGELOG.md`, and updates `.release-please-manifest.json` based on the Conventional Commits since the last release. `release-please-config.json` declares `release-type: node`, `bump-minor-pre-major: true`, `bump-patch-for-minor-pre-major: true`.
 3. When that PR is merged, the workflow:
    - checks out, installs, builds
-   - runs `npx workspaces-publish` (publishes to npm with provenance via `id-token: write`)
+   - publishes to npm via `tada5hi/monoship@v2` (with provenance via `id-token: write`)
    - runs `npm run test:coverage`
    - uploads coverage to Codecov via `codecov/codecov-action@v4.1.1`.
 
@@ -114,8 +112,8 @@ Fully automated via **release-please** (`.github/workflows/release.yml`):
 
 Two GitHub Actions workflows:
 
-- **`main.yml`** — runs on push/PR against `develop`, `master`, `next`, `beta`, `alpha`. Job graph: `install → build → {lint, tests}`. All jobs use the composite actions in `.github/actions/install` and `.github/actions/build`, with caching keyed by `package.json` hash and commit SHA respectively. Primary Node version: 22.
-- **`release.yml`** — runs on push to `master` only. release-please is the gate; downstream steps run only if `releases_created == 'true'`. Node version for the release job: 20 (the project's minimum supported Node).
+- **`main.yml`** — runs on push/PR against `develop`, `master`, `next`, `beta`, `alpha`. Job graph: `install → build → {lint, tests}`. All jobs use the composite actions in `.github/actions/install` and `.github/actions/build`, with caching keyed by `package-lock.json` hash and commit SHA respectively. Primary Node version: 24.
+- **`release.yml`** — runs on push to `master` only. release-please is the gate; downstream steps run only if `releases_created == 'true'`. Primary Node version: 24.
 
 ## Best Practices
 

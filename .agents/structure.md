@@ -33,11 +33,10 @@ smob/
 │   ├── actions/               # Composite actions: install, build
 │   └── dependabot.yml
 ├── .husky/commit-msg          # Runs commitlint on every commit message
-├── rollup.config.mjs          # Rollup bundle config (CJS + ESM)
-├── tsconfig.json              # Build tsconfig (extends @tada5hi/tsconfig)
-├── tsconfig.eslint.json       # tsconfig for type-aware ESLint
-├── .eslintrc                  # ESLint config (extends @tada5hi/eslint-config-typescript)
-├── commitlint.config.js       # Extends @tada5hi/commitlint-config
+├── tsdown.config.ts           # tsdown bundle config (CJS + ESM, target es2022)
+├── tsconfig.json              # tsconfig (extends @tada5hi/tsconfig; noEmit — tsdown handles emission)
+├── eslint.config.js           # ESLint flat config (extends @tada5hi/eslint-config)
+├── commitlint.config.mjs      # Extends @tada5hi/commitlint-config
 ├── release-please-config.json # release-please configuration
 └── .release-please-manifest.json # Current released version (do not edit manually)
 ```
@@ -63,31 +62,34 @@ There are **no production dependencies** (declared goal in the README and `packa
 
 | Dependency                          | Role                                                  |
 |-------------------------------------|-------------------------------------------------------|
-| `rollup` + `@rollup/plugin-node-resolve` | Bundle `src/index.ts` → `dist/index.cjs` / `dist/index.mjs` |
-| `@swc/core`                         | Inline Rollup transform plugin compiles TS → ES2022   |
-| `typescript`                        | Type-checks source and emits `dist/index.d.ts`        |
+| `tsdown`                            | Bundles `src/index.ts` → `dist/index.{cjs,mjs}` + emits `dist/index.d.{cts,mts}` in a single pass (Rolldown + Oxc) |
+| `typescript`                        | Type-checks source (`tsc --noEmit` via the IDE / editors); declaration emission is delegated to tsdown |
 | `vitest` + `@vitest/coverage-v8`    | Test runner and coverage                              |
-| `eslint` + `@tada5hi/eslint-config-typescript` | Linting                                    |
+| `eslint` + `@tada5hi/eslint-config` + `typescript-eslint` | Linting (ESLint 10 flat config)    |
 | `@tada5hi/tsconfig`                 | Base tsconfig                                         |
 | `@tada5hi/commitlint-config` + `husky` | Conventional Commits enforcement                   |
-| `workspaces-publish`                | Used by the release workflow to publish to npm        |
-| `cross-env`                         | Sets `NODE_ENV=test` portably in the `test` scripts   |
 
 ## Package Exports
 
-`package.json` defines a single public entry:
+`package.json` defines a single public entry with conditional exports for ESM and CJS (each pinning its own `.d.mts` / `.d.cts` types):
 
 ```json
 {
+  "type": "module",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
+  "types": "dist/index.d.mts",
   "exports": {
     "./package.json": "./package.json",
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs"
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
     }
   }
 }

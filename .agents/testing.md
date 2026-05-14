@@ -2,8 +2,8 @@
 
 ## Setup
 
-- **Runner**: Vitest 4 (`vitest run` — non-watch)
-- **Test location**: `test/unit/**/*.spec.ts`
+- **Runner**: Vitest 4 (`vitest --run` — non-watch)
+- **Test location**: `test/unit/**/*.{test,spec}.{js,ts}`
 - **Config**: `test/vitest.config.ts` (the `npm test` script passes `--config test/vitest.config.ts`)
 - **Coverage provider**: `@vitest/coverage-v8`
 - **Prerequisite**: nothing — no databases, no Docker, no fixtures. Just `npm install`.
@@ -15,11 +15,11 @@ npm run test                        # run the full vitest suite
 npm run test:coverage               # same, plus v8 coverage report → ./coverage/
 
 # Single file / pattern — bypass the npm script and call vitest directly:
-npx vitest run --config test/vitest.config.ts test/unit/module.spec.ts
-npx vitest run --config test/vitest.config.ts -t "should merge arrays"
+npx vitest --run --config test/vitest.config.ts test/unit/module.spec.ts
+npx vitest --run --config test/vitest.config.ts -t "should merge arrays"
 ```
 
-`npm test` sets `NODE_ENV=test` via `cross-env`. The `--config test/vitest.config.ts` flag is required because the config does **not** live at the repo root.
+The `--config test/vitest.config.ts` flag is required because the config does **not** live at the repo root.
 
 ## Test Layers
 
@@ -72,7 +72,7 @@ install ──► build ──► lint
                  └──► tests   (runs `npm run test`)
 ```
 
-All three downstream jobs reuse cached `node_modules` (keyed by `package.json` hash) and a cached `dist/` (keyed by commit SHA) — so the `tests` job runs against the freshly built artifacts, not source-level.
+All three downstream jobs reuse cached `node_modules` (keyed by `package-lock.json` hash) and a cached `dist/` (keyed by commit SHA) — so the `tests` job runs against the freshly built artifacts, not source-level. Primary Node version: 24.
 
 ## Writing New Tests
 

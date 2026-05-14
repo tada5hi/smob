@@ -11,19 +11,21 @@
 npm install
 
 # Development
-npm run build              # tsc --emitDeclarationOnly + rollup
-npm run test               # vitest run
-npm run test:coverage      # vitest with v8 coverage
-npm run lint               # eslint ./src
+npm run build              # build:types (tsc --noEmit typecheck) + build:js (tsdown bundle + d.ts emit)
+npm run build:types        # tsc — typecheck only (noEmit)
+npm run build:js           # tsdown — emit dist/index.{cjs,mjs,d.cts,d.mts}
+npm run test               # vitest --run
+npm run test:coverage      # vitest --run --coverage (v8)
+npm run lint               # eslint (flat config)
 npm run lint:fix           # eslint --fix
 ```
 
 - **Node.js**: `>=20.0.0`
 - **Package manager**: npm (lockfile checked in)
-- **Build tool**: Rollup + SWC (JS), `tsc --emitDeclarationOnly` (types)
+- **Build tool**: [tsdown](https://tsdown.dev) (Rolldown + Oxc — bundles JS and emits types in one pass; targets `es2022`)
 - **Test runner**: Vitest 4
-- **Linter**: ESLint 8 (`@tada5hi/eslint-config-typescript`)
-- **Module format**: ESM source, dual CJS/ESM build output
+- **Linter**: ESLint 10 with flat config (`@tada5hi/eslint-config`)
+- **Module format**: ESM source (`"type": "module"`), dual CJS/ESM build output
 
 ## Package Surface
 
@@ -33,7 +35,7 @@ This is a single-package library, not a monorepo. The published package exports 
 |-----------|---------------|
 | `import`  | `dist/index.mjs` (ESM) |
 | `require` | `dist/index.cjs` (CJS) |
-| `types`   | `dist/index.d.ts`      |
+| `types`   | `dist/index.d.mts` (ESM) / `dist/index.d.cts` (CJS) |
 
 Everything re-exported from `src/index.ts` is public API. There is no CLI and no documentation site.
 
