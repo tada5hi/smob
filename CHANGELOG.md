@@ -5,6 +5,13 @@
 
 * introduce arrayPriority option ([#328](https://github.com/Tada5hi/smob/issues/328)) ([7d287bf](https://github.com/Tada5hi/smob/commit/7d287bf1238c15b5670e91b7f3a7100518ed3ac0))
 
+## [1.6.2](https://github.com/tada5hi/smob/compare/smob-v1.6.1...smob-v1.6.2) (2026-05-14)
+
+
+### Bug Fixes
+
+* reject unsafe keys on every merge branch to close scoped prototype pollution ([#446](https://github.com/tada5hi/smob/issues/446)) ([3dbae87](https://github.com/tada5hi/smob/commit/3dbae872f0045a2fd2284e4c10785e4ee563b917))
+
 ## [1.6.1](https://github.com/tada5hi/smob/compare/smob-v1.6.0...smob-v1.6.1) (2026-02-11)
 
 
