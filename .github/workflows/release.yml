@@ -43,7 +43,7 @@ jobs:
 
             - name: Publish
               if: steps.release.outputs.releases_created == 'true'
-              uses: tada5hi/monoship@v2.1.0
+              uses: tada5hi/monoship@v2.2.0
 
             - name: Coverage
               if: steps.release.outputs.releases_created == 'true'
