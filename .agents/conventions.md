@@ -6,7 +6,7 @@
 |----------------------------------------|----------------------------------------------------------------------|
 | TypeScript 5 (`@tada5hi/tsconfig`)     | Type checking via `npm run build:types` (`tsc`, `noEmit: true`); also used by editors/IDEs. |
 | tsdown (Rolldown + Oxc)                | `npm run build:js` — bundles `src/index.ts` to `dist/index.{cjs,mjs}` and emits `dist/index.d.{cts,mts}` declarations. |
-| Vitest 4                               | Test runner (config at `test/vitest.config.ts`).                     |
+| Vitest 5                               | Test runner (config at `test/vitest.config.ts`).                     |
 | ESLint 10 (`@tada5hi/eslint-config`) + `typescript-eslint` | Linting via flat config (`eslint.config.js`).    |
 | Husky 9                                | Git hooks (currently only `commit-msg`).                             |
 | commitlint + `@tada5hi/commitlint-config` | Validates Conventional Commits on every commit.                   |

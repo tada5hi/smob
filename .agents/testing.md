@@ -2,7 +2,7 @@
 
 ## Setup
 
-- **Runner**: Vitest 4 (`vitest --run` — non-watch)
+- **Runner**: Vitest 5 (`vitest --run` — non-watch)
 - **Test location**: `test/unit/**/*.{test,spec}.{js,ts}`
 - **Config**: `test/vitest.config.ts` (the `npm test` script passes `--config test/vitest.config.ts`)
 - **Coverage provider**: `@vitest/coverage-v8`

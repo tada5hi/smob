@@ -1,5 +1,5 @@
 import { PriorityName } from '../constants';
-import type { Options, OptionsInput } from '../type';
+import type { Options, OptionsInput } from '../types';
 
 export function buildOptions(options: OptionsInput = {}) : Options {
     options.array = options.array ?? true;

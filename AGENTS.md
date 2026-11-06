@@ -23,7 +23,7 @@ npm run lint:fix           # eslint --fix
 - **Node.js**: `>=20.0.0`
 - **Package manager**: npm (lockfile checked in)
 - **Build tool**: [tsdown](https://tsdown.dev) (Rolldown + Oxc — bundles JS and emits types in one pass; targets `es2022`)
-- **Test runner**: Vitest 4
+- **Test runner**: Vitest 5
 - **Linter**: ESLint 10 with flat config (`@tada5hi/eslint-config`)
 - **Module format**: ESM source (`"type": "module"`), dual CJS/ESM build output
 
