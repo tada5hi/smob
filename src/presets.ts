@@ -1,5 +1,5 @@
 import { createMerger } from './module';
-import type { MergerResult } from './type';
+import type { MergerResult } from './types';
 
 /**
  * Assign source attributes to a target object.

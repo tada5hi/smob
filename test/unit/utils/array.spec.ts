@@ -27,6 +27,7 @@ describe('src/utils/array', () => {
         expect(distinctArray(arr)).toEqual([['foo', 'bar'], ['bar', 'foo']]);
 
         const circ : any = { foo: 'bar' };
+
         circ.bar = circ;
 
         arr = [{ foo: { bar: 'baz' } }, circ];
@@ -40,6 +41,7 @@ describe('src/utils/array', () => {
 
         const firstRegex = /foo/;
         const secondRegex = /foo/;
+
         expect(distinctArray([firstRegex, secondRegex])).toEqual([firstRegex]);
     });
 });

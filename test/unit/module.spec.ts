@@ -22,6 +22,7 @@ describe('src/module/*.ts', () => {
         };
 
         let merged = merge({}, a, b);
+
         expect(merged).toEqual({
             a: 1,
             b: 2,
@@ -61,6 +62,7 @@ describe('src/module/*.ts', () => {
         };
 
         const merged = merge({}, a, b);
+
         expect(merged).toEqual({
             a: {
                 a: 1,
@@ -98,6 +100,7 @@ describe('src/module/*.ts', () => {
         };
 
         const merged = createMerger({ priority: 'right' })({}, a, b);
+
         expect(merged).toEqual({
             a: {
                 a: 1,
@@ -121,6 +124,7 @@ describe('src/module/*.ts', () => {
                     typeof value === 'number'
                 ) {
                     target[key] += value;
+
                     return target;
                 }
 
@@ -134,9 +138,11 @@ describe('src/module/*.ts', () => {
 
     it('should (not) merge arrays', () => {
         let merged = merge({ a: [1, 2, 3] }, { a: [4, 5, 6] });
+
         expect(merged).toEqual({ a: [1, 2, 3, 4, 5, 6] });
 
         let merger = createMerger({ array: false });
+
         merged = merger({ a: [1, 2, 3] }, { a: [4, 5, 6] });
         expect(merged).toEqual({ a: [1, 2, 3] });
 
@@ -158,17 +164,21 @@ describe('src/module/*.ts', () => {
         const two = new MyCircularClass();
 
         const merged = merge(one, two);
+
         expect(merged).toEqual(one);
     });
 
     it('should merge circular objects', () => {
         const foo : Record<string, any> = { bar: 'baz' };
+
         foo.boz = foo;
 
         const boo : Record<string, any> = { bar: 'baz', extra: foo };
+
         boo.boz = boo;
 
         const merged = merge(foo, boo);
+
         expect(merged.extra).toBeDefined();
         expect(merged.bar).toEqual('baz');
         expect(merged.boz.bar).toEqual('baz');
@@ -179,18 +189,22 @@ describe('src/module/*.ts', () => {
 
     it('should merge circular arrays', () => {
         const foo : any[] = ['bar'];
+
         foo.push(foo);
 
         const boo : any[] = ['bar'];
+
         boo.push(boo);
 
         const merged = merge(foo, boo);
+
         expect(merged.length).toEqual(4);
     });
 
     it('should not merge unsafe key', () => {
         const merger = createMerger({ priority: 'right' });
         const merged = merger({ prototype: null }, { prototype: 1 });
+
         expect(Object.hasOwn(merged as object, 'prototype')).toBe(false);
     });
 
@@ -207,6 +221,7 @@ describe('src/module/*.ts', () => {
 
     it('should not pollute prototype of in-place target via __proto__ key', () => {
         const target : Record<string, any> = { x: 1 };
+
         assign(target, JSON.parse('{"__proto__":{"polluted":"YES"}}'));
 
         expect(target.polluted).toBeUndefined();
@@ -236,6 +251,7 @@ describe('src/module/*.ts', () => {
         };
 
         const data = merge({}, item);
+
         expect(data.id).toEqual(1);
         expect(data.name).toEqual('admin');
     });
@@ -258,9 +274,11 @@ describe('src/module/*.ts', () => {
         };
 
         const ob = merge(foo, bar);
+
         expect(ob).toEqual({ foo: 'bar', bar: 'baz' });
 
         const arr = merge([foo], [bar]);
+
         expect(arr).toEqual([foo, bar]);
     });
 
@@ -276,6 +294,7 @@ describe('src/module/*.ts', () => {
 
     it('should merge arrays with right priority', () => {
         const merger = createMerger({ arrayPriority: 'right' });
+
         expect(merger([4, 5, 6], [1, 2, 3])).toEqual([1, 2, 3, 4, 5, 6]);
 
         expect(merger({ foo: [4, 5, 6] }, { foo: [1, 2, 3, 4] })).toEqual({ foo: [1, 2, 3, 4, 4, 5, 6] });
@@ -352,6 +371,7 @@ describe('src/module/*.ts', () => {
         };
 
         const merger = createMerger({ inPlace: false, clone: true });
+
         expect(merger({ foo: x }, { foo: y })).toEqual({ foo: { foo: 'bar', bar: 'baz' } });
 
         expect(x).toEqual({ foo: 'bar' });
@@ -368,6 +388,7 @@ describe('src/module/*.ts', () => {
         };
 
         const merger = createMerger({ inPlace: false, clone: true, priority: 'right' });
+
         expect(merger({ foo: x }, { foo: y })).toEqual({ foo: { foo: 'bar', bar: 'baz' } });
 
         expect(x).toEqual({ foo: 'bar' });
@@ -384,6 +405,7 @@ describe('src/module/*.ts', () => {
         };
 
         const merger = createMerger({ inPlace: true });
+
         expect(merger({ foo: x }, { foo: y })).toEqual({ foo: { foo: 'bar', bar: 'baz' } });
 
         expect(x).toEqual({ foo: 'bar', bar: 'baz' });
@@ -400,6 +422,7 @@ describe('src/module/*.ts', () => {
         };
 
         const merger = createMerger({ inPlace: true, priority: 'right' });
+
         expect(merger({ foo: x }, { foo: y })).toEqual({ foo: { foo: 'bar', bar: 'baz' } });
 
         expect(x).toEqual({ foo: 'bar' });
@@ -418,6 +441,7 @@ describe('src/module/*.ts', () => {
         };
 
         const merger = createMerger({ inPlace: true, priority: 'right' });
+
         expect(merger({ foo: x }, { foo: y })).toEqual({ foo: { foo: ['baz', 'bar'] } });
 
         expect(x).toEqual({ foo: ['bar'] });

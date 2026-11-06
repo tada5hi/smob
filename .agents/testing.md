@@ -2,7 +2,7 @@
 
 ## Setup
 
-- **Runner**: Vitest 4 (`vitest --run` — non-watch)
+- **Runner**: Vitest 5 (`vitest --run` — non-watch)
 - **Test location**: `test/unit/**/*.{test,spec}.{js,ts}`
 - **Config**: `test/vitest.config.ts` (the `npm test` script passes `--config test/vitest.config.ts`)
 - **Coverage provider**: `@vitest/coverage-v8`
@@ -49,7 +49,7 @@ When adding a new feature or option:
 
 1. Add a test under `test/unit/` mirroring the source location (e.g. a new util in `src/utils/foo.ts` → `test/unit/utils/foo.spec.ts`).
 2. Cover the option's default, both explicit values (where applicable), interaction with `priority` / `arrayPriority`, and cycle behavior if the new code recurses.
-3. Update the README option table and the `Options` JSDoc in `src/type.ts`.
+3. Update the README option table and the `Options` JSDoc in `src/types.ts`.
 
 ### Mocking
 

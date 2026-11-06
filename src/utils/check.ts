@@ -13,7 +13,9 @@ export function isSafeKey(key: string) : boolean {
 }
 
 export function isEqual(x: any, y: any): boolean {
-    if (Object.is(x, y)) return true;
+    if (Object.is(x, y)) {
+        return true;
+    }
 
     if (x instanceof Date && y instanceof Date) {
         return x.getTime() === y.getTime();
@@ -29,12 +31,14 @@ export function isEqual(x: any, y: any): boolean {
     ) {
         const keysX = Reflect.ownKeys(x) as string[];
         const keysY = Reflect.ownKeys(y) as string[];
+
         if (keysX.length !== keysY.length) {
             return false;
         }
 
         for (let i = 0; i < keysX.length; i++) {
             const key = keysX[i];
+
             if (!Reflect.has(y, key) || !isEqual(x[key], y[key])) {
                 return false;
             }

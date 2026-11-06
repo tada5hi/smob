@@ -31,9 +31,12 @@ export function polyfillClone<T>(input: T) {
             }
 
             const cloned = [] as A;
+
             map.set(value, cloned);
 
-            value.map((el) => (cloned as any[]).push(fn(el)));
+            value.forEach((el) => {
+                (cloned as any[]).push(fn(el));
+            });
 
             return cloned;
         }
@@ -47,6 +50,7 @@ export function polyfillClone<T>(input: T) {
             const keys = Object.keys(value);
 
             map.set(value, output);
+
             for (let i = 0; i < keys.length; i++) {
                 output[keys[i] as keyof A] = fn(value[keys[i]]);
             }

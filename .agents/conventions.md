@@ -6,7 +6,7 @@
 |----------------------------------------|----------------------------------------------------------------------|
 | TypeScript 5 (`@tada5hi/tsconfig`)     | Type checking via `npm run build:types` (`tsc`, `noEmit: true`); also used by editors/IDEs. |
 | tsdown (Rolldown + Oxc)                | `npm run build:js` — bundles `src/index.ts` to `dist/index.{cjs,mjs}` and emits `dist/index.d.{cts,mts}` declarations. |
-| Vitest 4                               | Test runner (config at `test/vitest.config.ts`).                     |
+| Vitest 5                               | Test runner (config at `test/vitest.config.ts`).                     |
 | ESLint 10 (`@tada5hi/eslint-config`) + `typescript-eslint` | Linting via flat config (`eslint.config.js`).    |
 | Husky 9                                | Git hooks (currently only `commit-msg`).                             |
 | commitlint + `@tada5hi/commitlint-config` | Validates Conventional Commits on every commit.                   |
@@ -37,7 +37,7 @@ The build step is not bound to commit time; the release workflow runs `npm run b
 
 ## Naming Conventions
 
-- **Type exports** live in `src/type.ts` and use `Options`, `Merger`, `Merger*` (`MergerSource`, `MergerResult`, `MergerContext`, `MergerSourceUnwrap`) — no `I`-prefix.
+- **Type exports** live in `src/types.ts` and use `Options`, `Merger`, `Merger*` (`MergerSource`, `MergerResult`, `MergerContext`, `MergerSourceUnwrap`) — no `I`-prefix.
 - **Predicates** are prefixed `is*` and return `item is T` where useful (`isObject`, `isSafeKey`, `isEqual`).
 - **Builders** are prefixed `build*` (`buildOptions`); **togglers** are prefixed `toggle*` (`togglePriority`).
 - **Factories** are prefixed `create*` (`createMerger`).
@@ -45,7 +45,7 @@ The build step is not bound to commit time; the release workflow runs `npm run b
 
 ## File Organization
 
-- `src/type.ts` is the single home for **all exported types**. Do not split types across multiple files unless they are unambiguously internal to one module.
+- `src/types.ts` is the single home for **all exported types**. Do not split types across multiple files unless they are unambiguously internal to one module.
 - `src/utils/` is a flat directory of single-concern utility files plus an `index.ts` barrel that re-exports everything.
 - Public API is **only** what `src/index.ts` re-exports — adding a new file under `src/` does not automatically expose it; it must be re-exported from a reachable barrel.
 

@@ -122,7 +122,7 @@ PriorityName enum          → src/constants.ts
 Cycle guard / equality     → src/utils/check.ts (isObject, isEqual, isSafeKey)
 Cloning                    → src/utils/clone.ts
 Deduplication              → src/utils/array.ts (distinctArray, used when arrayDistinct: true)
-Public types               → src/type.ts
+Public types               → src/types.ts
 ```
 
 ## Configuration

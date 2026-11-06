@@ -49,7 +49,7 @@ smob/
 | `src/constants.ts`    | `PriorityName` enum used for `priority` / `arrayPriority` option values.                                 |
 | `src/module.ts`       | Core algorithm: `baseMerger()` (recursive worker) and `createMerger()` factory. Exports default `merge`. |
 | `src/presets.ts`      | `assign()` — preset using `createMerger({ inPlace: true, priority: 'left', array: false })`.             |
-| `src/type.ts`         | All exported type definitions: `Options`, `OptionsInput`, `Merger`, `MergerSource`, `MergerResult`, `MergerContext`, `MergerSourceUnwrap`. |
+| `src/types.ts`         | All exported type definitions: `Options`, `OptionsInput`, `Merger`, `MergerSource`, `MergerResult`, `MergerContext`, `MergerSourceUnwrap`. |
 | `src/utils/array.ts`  | `distinctArray()` — dedup an array using deep equality (`isEqual`).                                      |
 | `src/utils/check.ts`  | Predicates: `isObject` (plain object guard), `isSafeKey` (prototype pollution guard), `isEqual` (deep). |
 | `src/utils/clone.ts`  | `clone()` prefers `structuredClone` when available; `polyfillClone()` is the cycle-aware fallback.       |
@@ -100,7 +100,7 @@ The barrel `src/index.ts` re-exports everything from `constants`, `module`, `uti
 ## Separation of Concerns
 
 - **Pure algorithm** → `src/module.ts` (`baseMerger`, `createMerger`).
-- **Type contracts** → `src/type.ts` (no runtime code).
+- **Type contracts** → `src/types.ts` (no runtime code).
 - **Option normalization** → `src/utils/options.ts`.
 - **Object/array/equality primitives** → `src/utils/{check,array,object,clone}.ts`.
 - **Convenience wrappers** over `createMerger` → `src/presets.ts`.
