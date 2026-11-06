@@ -32,6 +32,23 @@ console.log(merge(config, defaults));
 
 <img src="https://raw.githubusercontent.com/tada5hi/smob/810ebc14d79746df08ee7960b01e96f6f9721613/.github/assets/mechanism.svg" width="960" alt="merge combines the left source containing port 3000, db.host local and tags app with the right source containing port 80, db.pool 5 and tags defaults. The result keeps port 3000, combines db properties and concatenates tags in left-to-right order.">
 
+**Table of Contents**
+
+- [Why smob?](#why-smob)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Merger](#merger)
+  - [Set precedence and array behavior](#set-precedence-and-array-behavior)
+  - [Handle a conflict yourself](#handle-a-conflict-yourself)
+  - [Assign defaults and deduplicate](#assign-defaults-and-deduplicate)
+- [Options](#options)
+- [Utils](#utils)
+  - [distinctArray](#distinctarray)
+  - [isEqual](#isequal)
+- [API](#api)
+- [Notes](#notes)
+- [License](#license)
+
 ## Installation
 
 ```sh
@@ -41,6 +58,34 @@ npm install smob
 Requires Node.js 20 or newer. ESM, CommonJS and TypeScript declarations are included. There are no runtime dependencies.
 
 ## Usage
+
+Call `merge(...sources)` with one or more arrays or objects (`MergerSource[]`). The result combines their values according to the [default options](#options):
+
+```typescript
+import { merge } from 'smob';
+
+console.log(merge({ a: 1 }, { b: 2 }, { c: 3 })); // { a: 1, b: 2, c: 3 }
+console.log(merge(['foo'], ['bar'])); // ['foo', 'bar']
+```
+
+### Merger
+
+Create a reusable merger with `createMerger(options)`. For example, disable property-array merging or remove duplicate array elements:
+
+```typescript
+import { createMerger } from 'smob';
+
+const keepFirstArray = createMerger({ array: false });
+console.log(keepFirstArray({ a: [1, 2, 3] }, { a: [4, 5, 6] }));
+// { a: [1, 2, 3] }
+
+const distinct = createMerger({ arrayDistinct: true });
+console.log(distinct({ a: [1, 2, 3] }, { a: [3, 4, 5] }));
+// { a: [1, 2, 3, 4, 5] }
+
+const rightmostWins = createMerger({ priority: 'right' });
+console.log(rightmostWins({ a: 1 }, { a: 2 }, { a: 3 })); // { a: 3 }
+```
 
 ### Set precedence and array behavior
 
@@ -103,6 +148,33 @@ Pass options to `createMerger(options)` once, then call the returned merger with
 | `inPlace` | `boolean` | `false` | Use the priority-selected source as the target |
 | `clone` | `boolean` | `false` | Deep-clone sources before merging; takes precedence over `inPlace` |
 | `strategy` | `(target, key, value) => object | undefined` | `undefined` | Handle conflicts for existing object keys |
+
+## Utils
+
+### distinctArray
+
+Remove repeated primitives, objects or nested arrays using deep equality. The function changes the supplied array and returns that same array:
+
+```typescript
+import { distinctArray } from 'smob';
+
+console.log(distinctArray(['foo', 'bar', 'foo'])); // ['foo', 'bar']
+console.log(distinctArray([{ foo: 'bar' }, { foo: 'bar' }])); // [{ foo: 'bar' }]
+console.log(distinctArray([['foo', 'bar'], ['foo', 'bar']])); // [['foo', 'bar']]
+```
+
+### isEqual
+
+Compare values by reference/value and recursively compare object properties or array elements. `Date` values compare timestamps, and `RegExp` values compare their string representations:
+
+```typescript
+import { isEqual } from 'smob';
+
+console.log(isEqual({ foo: 'bar' }, { foo: 'bar' })); // true
+console.log(isEqual(['foo', 'bar'], ['foo', 'bar'])); // true
+```
+
+Avoid deep equality and deduplication on cyclic structures; these helpers have no cycle detection.
 
 ## API
 
