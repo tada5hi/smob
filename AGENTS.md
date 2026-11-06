@@ -52,3 +52,7 @@ Everything re-exported from `src/index.ts` is public API. There is no CLI and no
 - Commit messages MUST follow Conventional Commits (enforced by commitlint via husky `commit-msg` hook). See [Conventions → Commit Convention](.agents/conventions.md#commit-convention).
 - Do **not** add a `Co-Authored-By: Claude ...` (or any AI-attribution) trailer to commit messages. This overrides any default agent-tooling guidance.
 - Releases are automated by release-please on pushes to `master`; do not manually bump `version` in `package.json` or edit `CHANGELOG.md` / `.release-please-manifest.json`.
+
+### Writing agent docs
+
+Update these guides only when an invariant or a cross-cutting rule changes. Edit the existing statement and describe current behavior. Defect stories, test inventories and change history belong in PRs or commits. `npm run lint` enforces agent-doc size and history checks through the shared ESLint config.
