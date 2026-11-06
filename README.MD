@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/tada5hi/smob/51a5fc19b0462a7c68a2f48ba3b1debe83e4dbeb/.github/assets/logo.svg" width="144" height="144" alt="smob logo">
+  <img src="https://raw.githubusercontent.com/tada5hi/smob/810ebc14d79746df08ee7960b01e96f6f9721613/.github/assets/logo.svg" width="144" height="144" alt="smob logo">
   <h1>smob</h1>
   <p><strong>Zero dependency library to safe merge objects.</strong></p>
   <p><a href="https://www.npmjs.com/package/smob"><img src="https://img.shields.io/npm/v/smob" alt="npm version"></a> <a href="https://github.com/tada5hi/smob/actions/workflows/main.yml"><img src="https://github.com/tada5hi/smob/actions/workflows/main.yml/badge.svg" alt="CI status"></a> <a href="LICENSE"><img src="https://img.shields.io/github/license/tada5hi/smob" alt="License"></a></p>
@@ -30,7 +30,7 @@ console.log(merge(config, defaults));
 // { port: 3000, db: { host: 'local', pool: 5 }, tags: ['app', 'defaults'] }
 ```
 
-<img src="https://raw.githubusercontent.com/tada5hi/smob/51a5fc19b0462a7c68a2f48ba3b1debe83e4dbeb/.github/assets/mechanism.svg" width="960" alt="merge combines the left source containing port 3000, db.host local and tags app with the right source containing port 80, db.pool 5 and tags defaults. The result keeps port 3000, combines db properties and concatenates tags in left-to-right order.">
+<img src="https://raw.githubusercontent.com/tada5hi/smob/810ebc14d79746df08ee7960b01e96f6f9721613/.github/assets/mechanism.svg" width="960" alt="merge combines the left source containing port 3000, db.host local and tags app with the right source containing port 80, db.pool 5 and tags defaults. The result keeps port 3000, combines db properties and concatenates tags in left-to-right order.">
 
 ## Installation
 
