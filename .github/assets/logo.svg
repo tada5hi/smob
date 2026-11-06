@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-labelledby="smob-a-title smob-a-desc">
+<title id="smob-a-title">SMOB — The merge flask</title>
+<desc id="smob-a-desc">Two input streams meet inside one laboratory flask, producing a combined object.</desc>
+<style>
+:root{--accent:#8660ca;--second:#d45486;--ink:#253447;--paper:#f7fafc;--line:#8394a7;--wash:#8660ca18}
+@media(prefers-color-scheme:dark){:root{--ink:#e4ebf3;--paper:#182332;--line:#8495aa;--wash:#8660ca22}}
+.a{stroke:var(--accent)}.b{stroke:var(--second)}.af{fill:var(--accent)}.bf{fill:var(--second)}.ink{fill:var(--ink)}.paper{stroke:var(--line)}.line{stroke:var(--line)}.wash{fill:var(--wash)}.white{fill:#fff}.neutral{fill:var(--paper)}
+</style>
+<path d="M102 36 H154 M111 36 V94 L61 183 Q48 211 79 218 H177 Q208 211 195 183 L145 94 V36" class="a" stroke-width="8" fill="var(--wash)" stroke-linecap="round" stroke-linejoin="round" /><path d="M80 160 L65 190 Q59 204 80 207 H176 Q197 204 191 190 L175 160 Z" class="a" stroke-width="0" fill="var(--accent)" stroke-linecap="round" stroke-linejoin="round" /><path d="M39 78 C62 78 64 116 95 135" class="b" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M217 78 C194 78 192 116 161 135" class="a" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round" /><circle cx="104" cy="179" r="8" class="bf" /><circle cx="151" cy="193" r="6" class="white" /><circle cx="139" cy="165" r="5" class="bf" /><circle cx="74" cy="61" r="7" class="bf" /><circle cx="181" cy="104" r="5" class="af" />
+</svg>

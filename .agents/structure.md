@@ -104,3 +104,5 @@ The barrel `src/index.ts` re-exports everything from `constants`, `module`, `uti
 - **Option normalization** → `src/utils/options.ts`.
 - **Object/array/equality primitives** → `src/utils/{check,array,object,clone}.ts`.
 - **Convenience wrappers** over `createMerger` → `src/presets.ts`.
+
+README visuals live in `.github/assets/`: the approved logo and the source-based mechanism diagram.
