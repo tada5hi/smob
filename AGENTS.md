@@ -1,7 +1,5 @@
 <!-- NOTE: Keep this file and all corresponding files in the .agents directory updated as the project evolves. When making architectural changes, adding new patterns, or discovering important conventions, update the relevant sections. -->
 
-Use this guide as the entry point. Read linked guides on demand before changing their areas.
-
 # smob — Agent Guide
 
 `smob` is a zero-dependency TypeScript library for safe, customizable merging of objects and arrays. It exposes a default `merge` function plus a `createMerger` factory that returns mergers configured with options (priority, array handling, in-place vs cloned, custom strategies). The library is published as both CJS and ESM with bundled type declarations.
