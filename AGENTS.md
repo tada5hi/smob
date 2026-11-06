@@ -20,7 +20,8 @@ npm run lint               # eslint (flat config)
 npm run lint:fix           # eslint --fix
 ```
 
-- **Node.js**: `>=20.0.0`
+- **Node.js (package runtime)**: `>=20.0.0`
+- **Node.js (development tooling)**: `^24.11.0 || >=26.0.0`; `.nvmrc` selects Node 24.
 - **Package manager**: npm (lockfile checked in)
 - **Build tool**: [tsdown](https://tsdown.dev) (Rolldown + Oxc — bundles JS and emits types in one pass; targets `es2022`)
 - **Test runner**: Vitest 5
