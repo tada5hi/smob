@@ -55,4 +55,4 @@ Everything re-exported from `src/index.ts` is public API. There is no CLI and no
 
 ### Writing agent docs
 
-Update these guides only when an invariant or a cross-cutting rule changes. Edit the existing statement and describe current behavior. Defect stories, test inventories and change history belong in PRs or commits. `npm run lint` enforces agent-doc size and history checks through the shared ESLint config.
+Keep existing commands, paths and factual descriptions current. Add guide content only for an invariant or a cross-cutting rule. Edit the existing statement and describe current behavior. Defect stories, test inventories and change history belong in PRs or commits. `npm run lint` enforces agent-doc size and history checks through the shared ESLint config.
