@@ -71,7 +71,7 @@
         "@tada5hi/eslint-config": "^3.3.1",
         "@tada5hi/tsconfig": "^0.7.2",
         "@vitest/coverage-v8": "^5.1.0",
-        "eslint": "^10.13.0",
+        "eslint": "^10.14.0",
         "husky": "^9.1.7",
         "tsdown": "^0.23.7",
         "typescript": "^5.9.3",
