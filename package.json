@@ -67,9 +67,10 @@
         }
     },
     "devDependencies": {
-        "@tada5hi/commitlint-config": "^1.3.1",
+        "@tada5hi/commitlint-config": "^1.3.2",
         "@tada5hi/eslint-config": "^3.3.1",
         "@tada5hi/tsconfig": "^0.7.2",
+        "@types/node": "^24.19.2",
         "@vitest/coverage-v8": "^5.1.0",
         "eslint": "^10.14.0",
         "husky": "^9.1.7",
